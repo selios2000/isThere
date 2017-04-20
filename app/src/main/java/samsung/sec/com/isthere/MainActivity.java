@@ -2,7 +2,9 @@ package samsung.sec.com.isthere;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -16,18 +18,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Context context;
+    private EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
-        /*ImageView img1= (ImageView)findViewById(R.id.img1);
+        setContentView(R.layout.activity_main_sliding);
+        editText=(EditText)findViewById(R.id.editText2);
+        SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        mLayout.setCoveredFadeColor(Color.TRANSPARENT);
+        ImageView img1= (ImageView)findViewById(R.id.img1);
         img1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -37,7 +46,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        Button btn1= (Button)findViewById(R.id.button9);
+       /* Button btn1= (Button)findViewById(R.id.button9);
         btn1.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,26 +54,22 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });*/
-     //   Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
-
-      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button btn1= (Button)findViewById(R.id.productBtn);
+        btn1.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                editText.setText("원하는 제품명을 검색해보세요");
+                //fragment조절해야함.
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
+        Button btn2= (Button)findViewById(R.id.placeBtn);
+        btn2.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setText("원하는 장소를 검색해보세요");
+                //fragment조절해야함.
+            }
+        });
     }
 
     @Override
