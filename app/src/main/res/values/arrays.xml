@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mapspinner">
+        <item >1km 이내</item>
+        <item >5km 이내</item>
+        <item >10km 이내</item>
+        <item >지역 선택</item>
+    </string-array>
+</resources>
