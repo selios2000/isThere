@@ -10,8 +10,8 @@ public class ReserveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserve);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
+      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+       // setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("예약하기");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
