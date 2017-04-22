@@ -70,26 +70,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return;
     }
 
-    public void addTestmarker(){
+    public void addTestmarker() {
         LatLng currentLocation1 = new LatLng(37.490072, 127.019828);
         MarkerOptions markerOptions1 = new MarkerOptions();
         markerOptions1.position(currentLocation1);
         // markerOptions1.title("GS25");
-        markerOptions1.icon(BitmapDescriptorFactory.fromResource(R.drawable.gs25));
+        //  markerOptions1.icon(BitmapDescriptorFactory.fromResource(R.drawable.gs25));
 
         LatLng currentLocation2 = new LatLng(37.490140, 127.021223);
         MarkerOptions markerOptions2 = new MarkerOptions();
         markerOptions2.position(currentLocation2);
         //markerOptions2.title("SevenEleven");
-        markerOptions2.icon(BitmapDescriptorFactory.fromResource(R.drawable.seveneleven));
+        //  markerOptions2.icon(BitmapDescriptorFactory.fromResource(R.drawable.seveneleven));
         mMap.addMarker(markerOptions1);
         mMap.addMarker(markerOptions2);
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-         getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
      /*   MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -107,4 +108,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) { // TODO Auto-generated method stub
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

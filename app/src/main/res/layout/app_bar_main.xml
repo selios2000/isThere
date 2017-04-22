@@ -6,52 +6,78 @@
     android:layout_height="match_parent"
     tools:context="samsung.sec.com.isthere.MainActivity">
 
-   <!-- <include layout="@layout/content_main" />-->
+    <!-- <include layout="@layout/content_main" />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="48dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                app:srcCompat="@drawable/logo" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textHI"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="HI,"
                 android:textAlignment="textStart"
-                android:textSize="40sp" />
+                android:textColor="#505050"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textIsthere"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Is there a"
+                android:layout_height="32dp"
+                android:text="IS THERE A"
                 android:textAlignment="textStart"
-                android:textSize="40sp" />
+                android:textColor="#505050"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="48dp"
+                android:layout_marginRight="50dp"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_weight="0.41">
 
-                <Button
-                    android:id="@+id/productBtn"
+                <TextView
+                    android:id="@+id/textproduct"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="product" />
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/appbarshape"
+                    android:elevation="4dp"
+                    android:text="PRODUCT"
+                    android:textColor="#505050"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/placeBtn"
+                <TextView
+                    android:id="@+id/textplace"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="place" />
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="10dp"
+                    android:elevation="4dp"
+                    android:text="PLACE"
+                    android:textColor="#505050"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>

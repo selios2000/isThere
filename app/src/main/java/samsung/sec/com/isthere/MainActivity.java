@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         editText=(EditText)findViewById(R.id.editText2);
         SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
-        ImageView img1= (ImageView)findViewById(R.id.img1);
+      /*  ImageView img1= (ImageView)findViewById(R.id.img1);
         img1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -44,17 +44,17 @@ public class MainActivity extends AppCompatActivity
                 //지도 액티비티로 이동
                 startActivity(intent);
             }
-        });
+        });*/
 
-       /* Button btn1= (Button)findViewById(R.id.button9);
-        btn1.setOnClickListener(new Button.OnClickListener() {
+      /*  Button btn3= (Button)findViewById(R.id.button9);
+        btn3.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ReserveActivity.class);
                 startActivity(intent);
             }
-        });*/
-        Button btn1= (Button)findViewById(R.id.productBtn);
+        });//예약하기*/
+       /* Button btn1= (Button)findViewById(R.id.productBtn);
         btn1.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,17 +69,18 @@ public class MainActivity extends AppCompatActivity
                 editText.setText("원하는 장소를 검색해보세요");
                 //fragment조절해야함.
             }
-        });
+        });*/
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        super.onBackPressed();
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
     }
 
     @Override

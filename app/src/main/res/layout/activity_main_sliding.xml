@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="150dp"
+    sothree:umanoPanelHeight="200dp"
     sothree:umanoShadowHeight="4dp"
     sothree:umanoParallaxOffset="100dp"
     sothree:umanoDragView="@+id/dragView"
@@ -17,12 +17,12 @@
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="360dp" />
 
     <!-- SLIDING LAYOUT -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="500dp"
         android:background="#ffffff"
         android:orientation="vertical"
         android:clickable="true"
@@ -38,6 +38,7 @@
                 android:id="@+id/editText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="24dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="원하는 제품명을 검색해보세요" />
