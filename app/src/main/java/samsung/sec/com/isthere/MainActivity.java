@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -36,6 +37,14 @@ public class MainActivity extends AppCompatActivity
         editText=(EditText)findViewById(R.id.editText2);
         SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
+        TextView btn3= (TextView)findViewById(R.id.textViewReserve1);
+        btn3.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ReserveActivity.class);
+                startActivity(intent);
+            }
+        });
       /*  ImageView img1= (ImageView)findViewById(R.id.img1);
         img1.setOnClickListener(new View.OnClickListener(){
             @Override

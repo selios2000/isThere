@@ -33,7 +33,11 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ReserveActivity"></activity>
+        <activity
+            android:name=".ReserveActivity"
+            android:label="@string/title_activity_maps"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
