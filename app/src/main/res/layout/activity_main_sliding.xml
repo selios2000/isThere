@@ -34,14 +34,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editText2"
+            <SearchView
+                android:id="@+id/searchview1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="24dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="원하는 제품명을 검색해보세요" />
+                android:iconifiedByDefault="false"
+                android:layout_height="match_parent"
+                android:queryHint="원하는 제품명을 검색해보세요"
+                />
+
 
             <include layout="@layout/content_main" />
         </LinearLayout>

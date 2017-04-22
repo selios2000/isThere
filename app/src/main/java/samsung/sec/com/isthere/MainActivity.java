@@ -4,22 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity
         context = this;
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_sliding);
-        editText=(EditText)findViewById(R.id.editText2);
         SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
         TextView btn3= (TextView)findViewById(R.id.textViewReserve1);
@@ -45,6 +42,21 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        ImageView img1= (ImageView)findViewById(R.id.imgGs25);
+        img1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MapsActivity.class);
+                //지도 액티비티로 이동
+                startActivity(intent);
+            }
+        });
+        // search view
+        //SearchView mSearchView = new SearchView(getSupportActionBar().getThemedContext());
+        //mSearchView.clearFocus();
+
+      ///  searchIcon.setImageResource(R.drawable.searchview_icon);
+      //  setupSearchView(mSearchView);
       /*  ImageView img1= (ImageView)findViewById(R.id.img1);
         img1.setOnClickListener(new View.OnClickListener(){
             @Override
