@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,19 +36,18 @@ public class MainActivity extends AppCompatActivity
     private EditText editText;
     private SlidingUpPanelLayout sl;
     private RecyclerView mRecyclerView;
-    private FrameLayout rlayout;
     private ArrayList<String> mArrayList;
     private DataAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private FrameLayout rlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_sliding);
         SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
-        TextView btn3= (TextView)findViewById(R.id.textViewReserve1);
+        /*TextView btn3= (TextView)findViewById(R.id.textViewReserve1);
 
         btn3.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(context, ReserveActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
         rlayout = (FrameLayout)findViewById(R.id.contentLayout);
-        ImageView img1= (ImageView)findViewById(R.id.imgGs25);
+       /* ImageView img1= (ImageView)findViewById(R.id.imgGs25);
         img1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -65,9 +65,12 @@ public class MainActivity extends AppCompatActivity
                 //지도 액티비티로 이동
                 startActivity(intent);
             }
-        });
+        });*/
         // search view
         initViews();
+        getListItem_frequent();
+        getListitem_popular();
+        getListitem_current();
         sl =(SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
         sl.requestFocus();
 
@@ -97,7 +100,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String query) {
                 return true;
@@ -115,6 +117,64 @@ public class MainActivity extends AppCompatActivity
         mAdapter = new DataAdapter(mArrayList,context);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.INVISIBLE);
+
+    }
+
+    private void getListItem_frequent(){
+
+        RecyclerView mRecyclerViewListItem;
+        ArrayList<String> mArrayListitem;
+        DataListAdapter mAdapterList;
+        RecyclerView.LayoutManager layoutManager_list;
+
+        mRecyclerViewListItem = (RecyclerView)findViewById(R.id.recycle_frequent);
+        mRecyclerViewListItem.setHasFixedSize(true);
+        layoutManager_list = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        mRecyclerViewListItem.setLayoutManager(layoutManager_list);
+        mArrayListitem= new ArrayList<>();
+        mArrayListitem.add("하이네켄");
+        mArrayListitem.add("하이네켄2");
+        mArrayListitem.add("하이네켄3");
+        mArrayListitem.add("조청 유과");
+        mAdapterList = new DataListAdapter(mArrayListitem,context);
+        mRecyclerViewListItem.setAdapter(mAdapterList);
+    }
+
+    private void getListitem_popular(){
+
+        RecyclerView mRecyclerViewListItem_popular;
+        ArrayList<String> mArrayListitem_popular;
+        DataListAdapter mAdapterList_popular;
+        RecyclerView.LayoutManager layoutManager_list_popular;
+
+        mRecyclerViewListItem_popular = (RecyclerView)findViewById(R.id.recycle_popular);
+        mRecyclerViewListItem_popular.setHasFixedSize(true);
+        layoutManager_list_popular = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        mRecyclerViewListItem_popular.setLayoutManager(layoutManager_list_popular);
+        mArrayListitem_popular= new ArrayList<>();
+        mArrayListitem_popular.add("하이네켄");
+        mArrayListitem_popular.add("하이네켄2");
+        mArrayListitem_popular.add("하이네켄3");
+        mArrayListitem_popular.add("조청 유과");
+        mAdapterList_popular = new DataListAdapter(mArrayListitem_popular,context);
+        mRecyclerViewListItem_popular.setAdapter(mAdapterList_popular);
+    }
+    private void getListitem_current(){
+
+        RecyclerView mRecyclerViewListItem_current;
+        ArrayList<DataCurrentItem> mArrayListitem_current;
+        DataCurrentItem_Adapter mAdapterList_current;
+        RecyclerView.LayoutManager layoutManager_list_current;
+
+        mRecyclerViewListItem_current = (RecyclerView)findViewById(R.id.recycle_current);
+        mRecyclerViewListItem_current.setHasFixedSize(true);
+        layoutManager_list_current = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        mRecyclerViewListItem_current.setLayoutManager(layoutManager_list_current);
+        mArrayListitem_current= new ArrayList<DataCurrentItem>();
+        //public DataCurrentItem(String itemid,String itemcount,String imgcurrent,String martname,String martposition,String martdistance){
+        mArrayListitem_current.add(new DataCurrentItem("하이네켄","12","gs25","GS25","서초타워점","200 M"));
+        mAdapterList_current = new DataCurrentItem_Adapter(mArrayListitem_current,context);
+        mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
     }
     @Override
     public void onBackPressed() {
@@ -137,7 +197,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -150,21 +209,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-      /*  if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

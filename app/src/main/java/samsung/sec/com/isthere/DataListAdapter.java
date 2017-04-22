@@ -1,9 +1,5 @@
 package samsung.sec.com.isthere;
 
-/**
- * Created by 빠빵 on 2017-04-23.
- */
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -17,25 +13,25 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> implements Filterable {
+public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.ViewHolder> implements Filterable {
     private ArrayList<String> mArrayList;
     private ArrayList<String> mFilteredList;
     private Context context;
-    public DataAdapter(ArrayList<String> arrayList,Context appcontext) {
+    public DataListAdapter(ArrayList<String> arrayList,Context appcontext) {
         mArrayList = arrayList;
         mFilteredList = arrayList;
         context=appcontext;
     }
 
     @Override
-    public DataAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.search_row, viewGroup, false);
+    public DataListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.searchlist_row, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(DataAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.itemid.setText(mFilteredList.get(i));
+    public void onBindViewHolder(DataListAdapter.ViewHolder viewHolder, int i) {
+        viewHolder.itemidlist.setText(mFilteredList.get(i));
     }
 
     @Override
@@ -72,16 +68,16 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> im
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView itemid;
-        private LinearLayout itemidlayout;
+        private TextView itemidlist;
+        private LinearLayout itemidlayoutlist;
         public ViewHolder(View view) {
             super(view);
-            itemid = (TextView)view.findViewById(R.id.itemid);
-            itemidlayout =(LinearLayout)view.findViewById(R.id.itemlayoutid);
-            itemidlayout.setOnClickListener(new View.OnClickListener() {
+            itemidlist = (TextView)view.findViewById(R.id.itemListid);
+            itemidlayoutlist =(LinearLayout)view.findViewById(R.id.itemListlayoutid);
+            itemidlayoutlist.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String text=itemid.getText().toString();
+                    String text=itemidlist.getText().toString();
                     Intent intent = new Intent(context, MapsActivity.class);
                     intent.putExtra("itemname",text);
                     context.startActivity(intent);
