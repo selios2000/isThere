@@ -3,10 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     app:layout_behavior="@string/appbar_scrolling_view_behavior" tools:showIn="@layout/app_bar_main"
     tools:context=".MainActivity">
 
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/notice_search_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"

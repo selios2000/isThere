@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
@@ -17,17 +19,26 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Context context;
     private EditText editText;
     private SlidingUpPanelLayout sl;
+    private RecyclerView mRecyclerView;
+    private FrameLayout rlayout;
+    private ArrayList<String> mArrayList;
+    private DataAdapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
         TextView btn3= (TextView)findViewById(R.id.textViewReserve1);
+
         btn3.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +56,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        rlayout = (FrameLayout)findViewById(R.id.contentLayout);
         ImageView img1= (ImageView)findViewById(R.id.imgGs25);
         img1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -54,8 +67,25 @@ public class MainActivity extends AppCompatActivity
             }
         });
         // search view
+        initViews();
         sl =(SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
+        sl.requestFocus();
         SearchView sr= (SearchView)findViewById(R.id.searchview1);
+        sr.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    rlayout.setVisibility(View.INVISIBLE);
+
+                }
+                else{
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    rlayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         sr.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -65,62 +95,30 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextChange(String query) {
                 //loadHistory(query);
-                Log.d("donggeoN","test");
+
                 return true;
             }
         });
-      ///  searchIcon.setImageResource(R.drawable.searchview_icon);
-      //  setupSearchView(mSearchView);
-      /*  ImageView img1= (ImageView)findViewById(R.id.img1);
-        img1.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MapsActivity.class);
-                //지도 액티비티로 이동
-                startActivity(intent);
-            }
-        });*/
 
-      /*  Button btn3= (Button)findViewById(R.id.button9);
-        btn3.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ReserveActivity.class);
-                startActivity(intent);
-            }
-        });//예약하기*/
-       /* Button btn1= (Button)findViewById(R.id.productBtn);
-        btn1.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText.setText("원하는 제품명을 검색해보세요");
-                //fragment조절해야함.
-            }
-        });
-        Button btn2= (Button)findViewById(R.id.placeBtn);
-        btn2.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText.setText("원하는 장소를 검색해보세요");
-                //fragment조절해야함.
-            }
-        });*/
     }
-
+    private void initViews(){
+        mRecyclerView = (RecyclerView)findViewById(R.id.notice_search_recycler);
+        mRecyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mArrayList= new ArrayList<>();
+        mArrayList.add("하이네켄");
+        mAdapter = new DataAdapter(mArrayList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }*/
     }
     @Override
     protected void onResume() {
         super.onResume();
-        sl.requestFocus();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,7 +138,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
