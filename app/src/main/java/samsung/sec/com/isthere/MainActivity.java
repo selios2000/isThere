@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Context context;
     private EditText editText;
+    private SlidingUpPanelLayout sl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +54,21 @@ public class MainActivity extends AppCompatActivity
             }
         });
         // search view
-        //SearchView mSearchView = new SearchView(getSupportActionBar().getThemedContext());
-        //mSearchView.clearFocus();
+        sl =(SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
+        SearchView sr= (SearchView)findViewById(R.id.searchview1);
+        sr.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String query) {
+                //loadHistory(query);
+                Log.d("donggeoN","test");
+                return true;
+            }
+        });
       ///  searchIcon.setImageResource(R.drawable.searchview_icon);
       //  setupSearchView(mSearchView);
       /*  ImageView img1= (ImageView)findViewById(R.id.img1);
@@ -103,7 +117,11 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }*/
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sl.requestFocus();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

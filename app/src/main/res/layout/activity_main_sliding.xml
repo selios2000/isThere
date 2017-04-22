@@ -1,11 +1,14 @@
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:isThere="http://schemas.android.com/apk/res-auto"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    android:background="#ffffff"
+    android:focusableInTouchMode="true"
     sothree:umanoPanelHeight="200dp"
     sothree:umanoShadowHeight="4dp"
     sothree:umanoParallaxOffset="100dp"
@@ -34,14 +37,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <SearchView
+            <android.support.v7.widget.SearchView
+                android:layout_marginTop="10dp"
                 android:id="@+id/searchview1"
                 android:layout_width="match_parent"
-                android:iconifiedByDefault="false"
+                isThere:iconifiedByDefault="false"
                 android:layout_height="match_parent"
-                android:queryHint="원하는 제품명을 검색해보세요"
+                android:background="@drawable/listshape"
+                isThere:queryHint="원하는 제품명을 검색해보세요"
                 />
-
 
             <include layout="@layout/content_main" />
         </LinearLayout>
