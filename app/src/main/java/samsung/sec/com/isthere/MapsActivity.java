@@ -1,6 +1,7 @@
 package samsung.sec.com.isthere;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -32,8 +33,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Intent intent = getIntent();
+        String mapsearchtext="";
+        if(intent != null)
+            mapsearchtext=intent.getStringExtra("itemname");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("하이네켄");
+        getSupportActionBar().setTitle(mapsearchtext);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

@@ -70,15 +70,16 @@ public class MainActivity extends AppCompatActivity
         initViews();
         sl =(SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
         sl.requestFocus();
+
         SearchView sr= (SearchView)findViewById(R.id.searchview1);
         sr.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus)
                 {
+                    sl.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     rlayout.setVisibility(View.INVISIBLE);
-
                 }
                 else{
                     mRecyclerView.setVisibility(View.INVISIBLE);
@@ -89,13 +90,16 @@ public class MainActivity extends AppCompatActivity
         sr.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.d("donggeon",query);
+                mArrayList.add(query);
+                Intent intent = new Intent(context, MapsActivity.class);
+                intent.putExtra("itemname",query);
+                startActivity(intent);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                //loadHistory(query);
-
                 return true;
             }
         });
@@ -108,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(layoutManager);
         mArrayList= new ArrayList<>();
         mArrayList.add("하이네켄");
-        mAdapter = new DataAdapter(mArrayList);
+        mAdapter = new DataAdapter(mArrayList,context);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.INVISIBLE);
     }
