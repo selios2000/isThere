@@ -253,7 +253,8 @@ public class MainActivity extends AppCompatActivity
                     String shop_name = oneObject.getString("shop_name");
                     Double marker_lat = oneObject.getDouble("shop_lat");
                     Double marker_lng = oneObject.getDouble("shop_lng");
-                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), Date.valueOf(oneObject.getString("shop_time")), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"));
+                    Double shop_distance = Double.parseDouble(String.format("%.1f",oneObject.getDouble("shop_distance")));
+                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), Date.valueOf(oneObject.getString("shop_time")), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance);
                     shops.add(shop);
                 }
             }catch(JSONException e){
