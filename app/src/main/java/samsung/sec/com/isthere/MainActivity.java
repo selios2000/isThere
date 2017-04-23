@@ -1,34 +1,46 @@
 package samsung.sec.com.isthere;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import Network.NetworkTask;
+import VO.Shop;
+import common.Scan;
+
+import static common.Scan.BR_ShopList;
+import static common.Scan.HTTP_ACTION_SHOPLIST;
+import static common.Scan.KEY_ShopList;
+import static common.Scan.lat;
+import static common.Scan.lng;
+import static common.Scan.scanDist;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +52,8 @@ public class MainActivity extends AppCompatActivity
     private DataAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private FrameLayout rlayout;
+
+    private ArrayList<Shop> shops;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,10 +195,6 @@ public class MainActivity extends AppCompatActivity
         super.onBackPressed();
     }
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -212,5 +222,51 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    //서버에서 Shop 리스트 목록을 리시버로 받음 (NetworkTask)
+    @Override
+    public void onResume(){
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BR_ShopList);
+        registerReceiver(mShopListBR, filter);
+        getShopList();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        unregisterReceiver(mShopListBR);
+    }
+    //리시버는 항상 해제 해줘야함
+
+    BroadcastReceiver mShopListBR = new BroadcastReceiver(){
+        public void onReceive(Context context, Intent intent){
+            try {
+                shops = new ArrayList<Shop>();
+                JSONArray jArray = new JSONArray(intent.getStringExtra(KEY_ShopList));
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject oneObject = jArray.getJSONObject(i); // Pulling items from the array
+                    String shop_id = oneObject.getString("shop_id");
+                    String shop_name = oneObject.getString("shop_name");
+                    Double marker_lat = oneObject.getDouble("shop_lat");
+                    Double marker_lng = oneObject.getDouble("shop_lng");
+                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), Date.valueOf(oneObject.getString("shop_time")), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"));
+                    shops.add(shop);
+                }
+            }catch(JSONException e){
+                Log.e("JSON Parsing error", e.toString());
+            }
+        }
+    };
+
+    private void getShopList(){
+        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_SHOPLIST, Scan.shopScan);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("dist", String.valueOf(scanDist));
+        params.put("lat", String.valueOf(lat));
+        params.put("lng", String.valueOf(lng));
+        networkTask.execute(params);
     }
 }

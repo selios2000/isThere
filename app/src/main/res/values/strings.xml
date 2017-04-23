@@ -3,7 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA5y3RruBUiDSQMbBFVIdNpQ1cQvTMixQ4</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyApFyWqwJXJ9Ch7Sy7ZTFHIowHKltDTmdE</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
 </resources>
