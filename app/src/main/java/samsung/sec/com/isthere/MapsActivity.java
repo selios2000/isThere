@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,14 +21,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        context = this;
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -40,6 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(mapsearchtext);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getListitem_current();
     }
 
     /**
@@ -121,5 +126,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getListitem_current(){
+
+        RecyclerView mRecyclerViewListItem_current;
+        ArrayList<DataCurrentItem> mArrayListitem_current;
+        DataCurrentItem_Adapter mAdapterList_current;
+        RecyclerView.LayoutManager layoutManager_list_current;
+
+        mRecyclerViewListItem_current = (RecyclerView)findViewById(R.id.recycle_maps);
+        mRecyclerViewListItem_current.setHasFixedSize(true);
+        layoutManager_list_current = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        mRecyclerViewListItem_current.setLayoutManager(layoutManager_list_current);
+        mArrayListitem_current= new ArrayList<DataCurrentItem>();
+        //public DataCurrentItem(String itemid,String itemcount,String imgcurrent,String martname,String martposition,String martdistance){
+        mArrayListitem_current.add(new DataCurrentItem("하이네켄","12","gs25","GS25","서초타워점","200 M"));
+        mAdapterList_current = new DataCurrentItem_Adapter(mArrayListitem_current,context);
+        mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
     }
 }

@@ -85,6 +85,7 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
         private TextView martposition_current;
         private TextView martdistance_current;
         private LinearLayout itemidlayoutlist;
+        private TextView textViewReserve1;
 
         public ViewHolder(View view) {
             super(view);
@@ -94,7 +95,16 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
             martname_current = (TextView) view.findViewById(R.id.martname_current);
             martposition_current = (TextView) view.findViewById(R.id.martposition_current);
             martdistance_current = (TextView) view.findViewById(R.id.martdistance_current);
-
+            textViewReserve1 = (TextView) view.findViewById(R.id.textViewReserve1);
+            textViewReserve1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ReserveActivity.class);
+                    String  itemname= itemid_current.getText().toString();
+                    intent.putExtra("itemname",itemname);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

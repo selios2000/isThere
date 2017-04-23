@@ -147,9 +147,8 @@ public class MainActivity extends AppCompatActivity
         mRecyclerViewListItem.setLayoutManager(layoutManager_list);
         mArrayListitem= new ArrayList<>();
         mArrayListitem.add("하이네켄");
-        mArrayListitem.add("하이네켄2");
-        mArrayListitem.add("하이네켄3");
-        mArrayListitem.add("조청 유과");
+        mArrayListitem.add("초정탄산수");
+        mArrayListitem.add("버드와이저");
         mAdapterList = new DataListAdapter(mArrayListitem,context);
         mRecyclerViewListItem.setAdapter(mAdapterList);
     }
@@ -166,9 +165,8 @@ public class MainActivity extends AppCompatActivity
         layoutManager_list_popular = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         mRecyclerViewListItem_popular.setLayoutManager(layoutManager_list_popular);
         mArrayListitem_popular= new ArrayList<>();
-        mArrayListitem_popular.add("하이네켄");
-        mArrayListitem_popular.add("하이네켄2");
-        mArrayListitem_popular.add("하이네켄3");
+        mArrayListitem_popular.add("허니버터칩");
+        mArrayListitem_popular.add("갤럭시S8");
         mArrayListitem_popular.add("조청 유과");
         mAdapterList_popular = new DataListAdapter(mArrayListitem_popular,context);
         mRecyclerViewListItem_popular.setAdapter(mAdapterList_popular);
@@ -253,6 +251,10 @@ public class MainActivity extends AppCompatActivity
                     String shop_name = oneObject.getString("shop_name");
                     Double marker_lat = oneObject.getDouble("shop_lat");
                     Double marker_lng = oneObject.getDouble("shop_lng");
+                    Log.d("donggeon","id"+shop_id);
+                    Log.d("donggeon","shop_name"+shop_name);
+                    Log.d("donggeon","marker_lat"+marker_lat);
+                    Log.d("donggeon","marker_lng"+marker_lng);
                     Double shop_distance = Double.parseDouble(String.format("%.1f",oneObject.getDouble("shop_distance")));
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), Date.valueOf(oneObject.getString("shop_time")), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance);
                     shops.add(shop);
