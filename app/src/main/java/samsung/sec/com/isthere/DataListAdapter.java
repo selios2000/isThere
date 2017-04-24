@@ -2,6 +2,7 @@ package samsung.sec.com.isthere;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static samsung.sec.com.isthere.R.drawable.listshape;
 
 public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.ViewHolder> implements Filterable {
     private ArrayList<String> mArrayList;
@@ -32,6 +35,16 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.ViewHo
     @Override
     public void onBindViewHolder(DataListAdapter.ViewHolder viewHolder, int i) {
         viewHolder.itemidlist.setText(mFilteredList.get(i));
+        if(i==0){
+            Drawable drawable = context.getResources().getDrawable(R.drawable.listshape);
+            viewHolder.itemidlayoutRoot.setBackground(drawable);
+        }else if(i==1){
+            Drawable drawable = context.getResources().getDrawable(R.drawable.listshape_second);
+            viewHolder.itemidlayoutRoot.setBackground(drawable);
+        }else{
+            Drawable drawable = context.getResources().getDrawable(R.drawable.listshape_third);
+            viewHolder.itemidlayoutRoot.setBackground(drawable);
+        }
     }
 
     @Override
@@ -70,10 +83,12 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView itemidlist;
         private LinearLayout itemidlayoutlist;
+        private LinearLayout itemidlayoutRoot;
         public ViewHolder(View view) {
             super(view);
             itemidlist = (TextView)view.findViewById(R.id.itemListid);
             itemidlayoutlist =(LinearLayout)view.findViewById(R.id.itemListlayoutid);
+            itemidlayoutRoot=(LinearLayout)view.findViewById(R.id.itemListlayoutidRoot);
             itemidlayoutlist.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

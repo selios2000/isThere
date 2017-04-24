@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity
         mArrayListitem.add("하이네켄");
         mArrayListitem.add("초정탄산수");
         mArrayListitem.add("버드와이저");
+        mArrayListitem.add("토레타");
         mAdapterList = new DataListAdapter(mArrayListitem,context);
         mRecyclerViewListItem.setAdapter(mAdapterList);
     }
@@ -168,6 +169,7 @@ public class MainActivity extends AppCompatActivity
         mArrayListitem_popular.add("허니버터칩");
         mArrayListitem_popular.add("갤럭시S8");
         mArrayListitem_popular.add("조청 유과");
+        mArrayListitem_popular.add("바나나 우유");
         mAdapterList_popular = new DataListAdapter(mArrayListitem_popular,context);
         mRecyclerViewListItem_popular.setAdapter(mAdapterList_popular);
     }
