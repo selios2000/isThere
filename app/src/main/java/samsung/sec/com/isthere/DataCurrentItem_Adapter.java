@@ -55,7 +55,7 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
         viewHolder.itemcount_current.setText(String.valueOf(mFilteredList.get(i).getStock_stock()));
         viewHolder.martname_current.setText(mFilteredList.get(i).getShop_name());
         viewHolder.martposition_current.setText(mFilteredList.get(i).getShop_info());
-        viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance()));
+        viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance())+ "M");
     }
 
     @Override

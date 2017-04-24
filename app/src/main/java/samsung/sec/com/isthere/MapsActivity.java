@@ -111,6 +111,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     String shop_name = oneObject.getString("shop_name");
                     Double marker_lat = oneObject.getDouble("shop_lat");
                     Double marker_lng = oneObject.getDouble("shop_lng");
+                    String shop_info = oneObject.getString("shop_info");
                     int shop_distance = (int) (oneObject.getDouble("distance")*1000);
                     int stock_stock = oneObject.getInt("stock_stock");
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance,stock_stock);
@@ -120,7 +121,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
 
                     MarkerOptions marker = new MarkerOptions();
-                    marker.position(new LatLng(marker_lat, marker_lng)).title(shop_id).snippet(shop_name);
+                    marker.position(new LatLng(marker_lat, marker_lng)).title(shop_info).snippet(shop_name);
                     int height = 150;
                     int width = 150;
                     BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.stock_color);
