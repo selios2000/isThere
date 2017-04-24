@@ -1,17 +1,18 @@
 package samsung.sec.com.isthere;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,14 +20,40 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import Network.NetworkTask;
+import VO.Shop;
+import common.Scan;
+
+import static common.Scan.BR_ShopList;
+import static common.Scan.HTTP_ACTION_SHOPLIST;
+import static common.Scan.KEY_ShopList;
+import static common.Scan.lat;
+import static common.Scan.lng;
+import static common.Scan.scanDist;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Context context;
+    private String mapsearchtext;
+    private ArrayList<Shop> shops;
+    private ArrayList<MarkerOptions> markers;
+
+    private RecyclerView mRecyclerViewListItem_current;
+    private DataCurrentItem_Adapter mAdapterList_current;
+    private RecyclerView.LayoutManager layoutManager_list_current;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +65,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         Intent intent = getIntent();
-        String mapsearchtext="";
         if(intent != null)
             mapsearchtext=intent.getStringExtra("itemname");
         setSupportActionBar(toolbar);
@@ -47,18 +73,68 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getListitem_current();
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    @Override
+    public void onResume(){
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BR_ShopList);
+        registerReceiver(mShopListBR, filter);
+
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        unregisterReceiver(mShopListBR);
+    }
+
+    private void getShopByItem() {
+        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_SHOPLIST ,Scan.shopScanByItem);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("item_name", mapsearchtext);
+        params.put("shop_lat", lat);
+        params.put("shop_lng", lng);
+        params.put("distance", scanDist);
+        networkTask.execute(params);
+    }
+
+    BroadcastReceiver mShopListBR = new BroadcastReceiver(){
+        public void onReceive(Context context, Intent intent){
+            try {
+                shops = new ArrayList<Shop>();
+                markers = new ArrayList<MarkerOptions>();
+                JSONArray jArray = new JSONArray(intent.getStringExtra(KEY_ShopList));
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject oneObject = jArray.getJSONObject(i); // Pulling items from the array
+                    String shop_id = oneObject.getString("shop_id");
+                    String shop_name = oneObject.getString("shop_name");
+                    Double marker_lat = oneObject.getDouble("shop_lat");
+                    Double marker_lng = oneObject.getDouble("shop_lng");
+                    Double shop_distance = Double.parseDouble(String.format("%.1f",oneObject.getDouble("distance")));
+                    int stock_stock = oneObject.getInt("stock_stock");
+                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance,stock_stock);
+                    shops.add(shop);
+
+                    mAdapterList_current = new DataCurrentItem_Adapter(shops,context);
+                    mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
+
+                    MarkerOptions marker = new MarkerOptions();
+                    marker.position(new LatLng(marker_lat, marker_lng)).title(shop_id).snippet(shop_name);
+                    markers.add(marker);
+                    Marker location = mMap.addMarker(marker);
+                }
+                if(shops.isEmpty())
+                    Toast.makeText(context, mapsearchtext + " : 현재 사용자 주변에 재고가 없습니다.", Toast.LENGTH_LONG).show();
+            }catch(JSONException e){
+                Log.e("JSON Parsing error", e.toString());
+            }
+        }
+    };
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        getShopByItem();
         //37.491, 127.020
         LatLng currentLocation = new LatLng(37.491, 127.020);
         //마커를 원하는 이미지로 변경해줘야함
@@ -74,28 +150,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-        addTestmarker();
-        return;
+
+        //상점 상품 상세 화면으로 이동
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            public boolean onMarkerClick(Marker marker) {
+
+                return false;
+            }
+        });
     }
 
-    public void addTestmarker() {
-        LatLng currentLocation1 = new LatLng(37.490072, 127.019828);
-        MarkerOptions markerOptions1 = new MarkerOptions();
-        markerOptions1.position(currentLocation1);
-        // markerOptions1.title("GS25");
-        //  markerOptions1.icon(BitmapDescriptorFactory.fromResource(R.drawable.gs25));
 
-        LatLng currentLocation2 = new LatLng(37.490140, 127.021223);
-        MarkerOptions markerOptions2 = new MarkerOptions();
-        markerOptions2.position(currentLocation2);
-        //markerOptions2.title("SevenEleven");
-        //  markerOptions2.icon(BitmapDescriptorFactory.fromResource(R.drawable.seveneleven));
-        mMap.addMarker(markerOptions1);
-        mMap.addMarker(markerOptions2);
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,20 +198,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getListitem_current(){
-
-        RecyclerView mRecyclerViewListItem_current;
-        ArrayList<DataCurrentItem> mArrayListitem_current;
-        DataCurrentItem_Adapter mAdapterList_current;
-        RecyclerView.LayoutManager layoutManager_list_current;
-
         mRecyclerViewListItem_current = (RecyclerView)findViewById(R.id.recycle_maps);
         mRecyclerViewListItem_current.setHasFixedSize(true);
         layoutManager_list_current = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         mRecyclerViewListItem_current.setLayoutManager(layoutManager_list_current);
-        mArrayListitem_current= new ArrayList<DataCurrentItem>();
         //public DataCurrentItem(String itemid,String itemcount,String imgcurrent,String martname,String martposition,String martdistance){
-        mArrayListitem_current.add(new DataCurrentItem("하이네켄","12","gs25","GS25","서초타워점","200 M"));
-        mAdapterList_current = new DataCurrentItem_Adapter(mArrayListitem_current,context);
-        mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
+        //mArrayListitem_current.add(new DataCurrentItem("하이네켄","12","gs25","GS25","서초타워점","200 M"));
     }
 }

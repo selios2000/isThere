@@ -26,7 +26,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +52,10 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layoutManager;
     private FrameLayout rlayout;
 
+    private RecyclerView mRecyclerViewListItem_current;
+    private DataCurrentItem_Adapter mAdapterList_current;
+    private RecyclerView.LayoutManager layoutManager_list_current;
+
     private ArrayList<Shop> shops;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_sliding);
         SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
+        shops = new ArrayList<Shop>();
         /*TextView btn3= (TextView)findViewById(R.id.textViewReserve1);
 
         btn3.setOnClickListener(new Button.OnClickListener() {
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity
         mRecyclerViewListItem.setLayoutManager(layoutManager_list);
         mArrayListitem= new ArrayList<>();
         mArrayListitem.add("하이네켄");
-        mArrayListitem.add("초정탄산수");
+        mArrayListitem.add("트레비");
         mArrayListitem.add("버드와이저");
         mArrayListitem.add("토레타");
         mAdapterList = new DataListAdapter(mArrayListitem,context);
@@ -168,27 +172,21 @@ public class MainActivity extends AppCompatActivity
         mArrayListitem_popular= new ArrayList<>();
         mArrayListitem_popular.add("허니버터칩");
         mArrayListitem_popular.add("갤럭시S8");
-        mArrayListitem_popular.add("조청 유과");
-        mArrayListitem_popular.add("바나나 우유");
+        mArrayListitem_popular.add("포스틱");
+        mArrayListitem_popular.add("바나나우유");
         mAdapterList_popular = new DataListAdapter(mArrayListitem_popular,context);
         mRecyclerViewListItem_popular.setAdapter(mAdapterList_popular);
     }
     private void getListitem_current(){
 
-        RecyclerView mRecyclerViewListItem_current;
-        ArrayList<DataCurrentItem> mArrayListitem_current;
-        DataCurrentItem_Adapter mAdapterList_current;
-        RecyclerView.LayoutManager layoutManager_list_current;
+
 
         mRecyclerViewListItem_current = (RecyclerView)findViewById(R.id.recycle_current);
         mRecyclerViewListItem_current.setHasFixedSize(true);
         layoutManager_list_current = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         mRecyclerViewListItem_current.setLayoutManager(layoutManager_list_current);
-        mArrayListitem_current= new ArrayList<DataCurrentItem>();
         //public DataCurrentItem(String itemid,String itemcount,String imgcurrent,String martname,String martposition,String martdistance){
-        mArrayListitem_current.add(new DataCurrentItem("하이네켄","12","gs25","GS25","서초타워점","200 M"));
-        mAdapterList_current = new DataCurrentItem_Adapter(mArrayListitem_current,context);
-        mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
+
     }
     @Override
     public void onBackPressed() {
@@ -245,7 +243,7 @@ public class MainActivity extends AppCompatActivity
     BroadcastReceiver mShopListBR = new BroadcastReceiver(){
         public void onReceive(Context context, Intent intent){
             try {
-                shops = new ArrayList<Shop>();
+
                 JSONArray jArray = new JSONArray(intent.getStringExtra(KEY_ShopList));
                 for (int i = 0; i < jArray.length(); i++) {
                     JSONObject oneObject = jArray.getJSONObject(i); // Pulling items from the array
@@ -257,9 +255,13 @@ public class MainActivity extends AppCompatActivity
                     Log.d("donggeon","shop_name"+shop_name);
                     Log.d("donggeon","marker_lat"+marker_lat);
                     Log.d("donggeon","marker_lng"+marker_lng);
-                    Double shop_distance = Double.parseDouble(String.format("%.1f",oneObject.getDouble("shop_distance")));
-                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), Date.valueOf(oneObject.getString("shop_time")), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance);
+                    Double shop_distance = Double.parseDouble(String.format("%.1f",oneObject.getDouble("distance")));
+                    int stock_stock = oneObject.getInt("stock_stock");
+                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance,stock_stock);
                     shops.add(shop);
+
+                    mAdapterList_current = new DataCurrentItem_Adapter(shops,context);
+                    mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
                 }
             }catch(JSONException e){
                 Log.e("JSON Parsing error", e.toString());
@@ -268,11 +270,12 @@ public class MainActivity extends AppCompatActivity
     };
 
     private void getShopList(){
-        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_SHOPLIST, Scan.shopScan);
+        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_SHOPLIST, Scan.shopScanByItem);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("dist", String.valueOf(scanDist));
-        params.put("lat", String.valueOf(lat));
-        params.put("lng", String.valueOf(lng));
+        params.put("item_name", "하이네켄");
+        params.put("shop_lat", lat);
+        params.put("shop_lng", lng);
+        params.put("distance", scanDist);
         networkTask.execute(params);
     }
 }

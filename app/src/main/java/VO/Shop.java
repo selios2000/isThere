@@ -1,7 +1,5 @@
 package VO;
 
-import java.util.Date;
-
 /**
  * Created by Administrator on 2017-04-15.
  */
@@ -12,28 +10,21 @@ public class Shop {
     private double shop_lat;
     private double shop_lng;
     private String shop_type;
-    private Date shop_time;
     private String shop_info;
     private String shop_vendor;
     private double distance;
+    private int stock_stock;
 
-    public Shop(String shop_name, double shop_lat, double shop_lng, String shop_type, String shop_info, String shop_vendor) {
-        this.shop_name = shop_name;
-        this.shop_lat = shop_lat;
-        this.shop_lng = shop_lng;
-        this.shop_type = shop_type;
-        this.shop_info = shop_info;
-        this.shop_vendor = shop_vendor;
-    }
-    public Shop(String shop_id, String shop_name, double shop_lat, double shop_lng, String shop_type, Date shop_time , String shop_info, String shop_vendor, double shop_distance) {
+
+    public Shop(String shop_id, String shop_name, double shop_lat, double shop_lng, String shop_type , String shop_info, String shop_vendor, double shop_distance, int stock_stock) {
         this.shop_id = shop_id;
         this.shop_name = shop_name;
         this.shop_lat = shop_lat;
         this.shop_lng = shop_lng;
         this.shop_type = shop_type;
-        this.shop_time = shop_time;
         this.shop_info = shop_info;
         this.shop_vendor = shop_vendor;
+        this.stock_stock = stock_stock;
     }
 
     public String getShop_id() {
@@ -66,12 +57,6 @@ public class Shop {
     public void setShop_type(String shop_type) {
         this.shop_type = shop_type;
     }
-    public Date getShop_time() {
-        return shop_time;
-    }
-    public void setShop_time(Date shop_time) {
-        this.shop_time = shop_time;
-    }
     public String getShop_info() {
         return shop_info;
     }
@@ -91,5 +76,13 @@ public class Shop {
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    public int getStock_stock() {
+        return stock_stock;
+    }
+
+    public void setStock_stock(int stock_stock) {
+        this.stock_stock = stock_stock;
     }
 }

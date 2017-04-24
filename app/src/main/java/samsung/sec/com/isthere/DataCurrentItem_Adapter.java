@@ -15,12 +15,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import VO.Shop;
+
 public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentItem_Adapter.ViewHolder> implements Filterable {
-    private ArrayList<DataCurrentItem> mArrayList;
-    private ArrayList<DataCurrentItem> mFilteredList;
+    private ArrayList<Shop> mArrayList;
+    private ArrayList<Shop> mFilteredList;
     private Context context;
 
-    public DataCurrentItem_Adapter(ArrayList<DataCurrentItem> arrayList, Context appcontext) {
+    public DataCurrentItem_Adapter(ArrayList<Shop> arrayList, Context appcontext) {
         mArrayList = arrayList;
         mFilteredList = arrayList;
         context = appcontext;
@@ -34,14 +36,24 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
 
     @Override
     public void onBindViewHolder(DataCurrentItem_Adapter.ViewHolder viewHolder, int i) {
-        viewHolder.itemid_current.setText(mFilteredList.get(i).getItemid_current());
-        Drawable drawable = context.getResources().getDrawable(R.drawable.conv_gs25);
+        viewHolder.itemid_current.setText(mFilteredList.get(i).getShop_id());
+
+        Drawable drawable = context.getResources().getDrawable(R.drawable.conv_gs25, null);
+        String shop_vendor = mFilteredList.get(i).getShop_vendor();
+        if(shop_vendor.equals("GS25"))
+            drawable = context.getResources().getDrawable(R.drawable.conv_gs25, null);
+        else if(shop_vendor.equals("7Eleven"))
+            drawable = context.getResources().getDrawable(R.drawable.conv_7e, null);
+        else if(shop_vendor.equals("CU"))
+            drawable = context.getResources().getDrawable(R.drawable.conv_cu, null);
+        else if(shop_vendor.equals("Ministop"))
+            drawable = context.getResources().getDrawable(R.drawable.conv_mini, null);
         viewHolder.item_img_current.setImageDrawable(drawable);
 
-        viewHolder.itemcount_current.setText(mFilteredList.get(i).getItemcount_current());
-        viewHolder.martname_current.setText(mFilteredList.get(i).getMartname_current());
-        viewHolder.martposition_current.setText(mFilteredList.get(i).getMartposition_current());
-        viewHolder.martdistance_current.setText(mFilteredList.get(i).getMartdistance_current());
+        viewHolder.itemcount_current.setText(String.valueOf(mFilteredList.get(i).getStock_stock()));
+        viewHolder.martname_current.setText(mFilteredList.get(i).getShop_name());
+        viewHolder.martposition_current.setText(mFilteredList.get(i).getShop_info());
+        viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance()));
     }
 
     @Override
@@ -61,7 +73,7 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
                 if (charString.isEmpty()) {
                     mFilteredList = mArrayList;
                 } else {
-                    ArrayList<DataCurrentItem> filteredList = new ArrayList<>();
+                    ArrayList<Shop> filteredList = new ArrayList<>();
                     mFilteredList = filteredList;
                 }
                 FilterResults filterResults = new FilterResults();
@@ -71,7 +83,7 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mFilteredList = (ArrayList<DataCurrentItem>) filterResults.values;
+                mFilteredList = (ArrayList<Shop>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
