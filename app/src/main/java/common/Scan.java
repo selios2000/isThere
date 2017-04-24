@@ -8,7 +8,7 @@ public class Scan {
 
     public static String localUrl = "http://192.168.0.5:8080/isthere";
     public static String awsUrl = "http://52.78.243.10:8080/isthere";
-    public static String selectedUrl = localUrl;
+    public static String selectedUrl = awsUrl;
 
     public static String shopAdd = "/shop/add";
     public static String shopScan = "/shop/scan";
