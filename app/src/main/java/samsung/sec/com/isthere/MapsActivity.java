@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -119,6 +121,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     MarkerOptions marker = new MarkerOptions();
                     marker.position(new LatLng(marker_lat, marker_lng)).title(shop_id).snippet(shop_name);
+                    int height = 150;
+                    int width = 150;
+                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.stock_color);
+                    Bitmap b=bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+                    marker.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                     markers.add(marker);
                     Marker location = mMap.addMarker(marker);
                 }
@@ -142,7 +150,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.position(currentLocation);
         markerOptions.title("BlueHack Hackathon");
         markerOptions.draggable(true);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        int height = 150;
+        int width = 150;
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.stock_black);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         //currentMarker = mGoogleMap.addMarker(markerOptions);
         //37.2512358
         //127.0187548

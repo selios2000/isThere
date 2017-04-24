@@ -8,9 +8,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    android:background="#1C2237"
+    android:background="#ffffff"
     android:focusableInTouchMode="true"
-    sothree:umanoPanelHeight="268dp"
+    sothree:umanoPanelHeight="270dp"
     sothree:umanoShadowHeight="4dp"
     sothree:umanoParallaxOffset="100dp"
     sothree:umanoDragView="@+id/dragView"
@@ -26,7 +26,7 @@
     <!-- SLIDING LAYOUT -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="520dp"
         android:background="#F5F5F5"
         android:orientation="vertical"
         android:clickable="true"
@@ -36,16 +36,18 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#ffffff"
             android:orientation="vertical">
 
             <android.support.v7.widget.SearchView
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:id="@+id/searchview1"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_width="match_parent"
                 isThere:iconifiedByDefault="false"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/searchshape"
                 isThere:queryHint="원하는 제품명을 검색해보세요"
                 />

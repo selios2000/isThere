@@ -3,16 +3,16 @@
     <item>
         <shape android:shape="rectangle">
             <!-- draw a 4 dp width border around the rectangle shape -->
-            <stroke android:color="#000000" android:width="1px"/>
+            <stroke android:color="#000000" android:width="1dp"/>
         </shape>
     </item>
     <!--
         hide left, top and right side border using white color
         by padding 4 dp bottom side
     -->
-    <item android:bottom="1px">
+    <item android:bottom="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="#f5f5f5"/>
+            <solid android:color="#ffffff"/>
         </shape>
     </item>
 </layer-list>

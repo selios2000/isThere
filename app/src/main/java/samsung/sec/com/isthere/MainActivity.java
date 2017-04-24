@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -92,7 +93,22 @@ public class MainActivity extends AppCompatActivity
         getListitem_current();
         sl =(SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
         sl.requestFocus();
+        sl.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
 
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                TextView product = (TextView)findViewById(R.id.textIstheretemplate);
+                if(newState == SlidingUpPanelLayout.PanelState.EXPANDED){
+                    product.setVisibility(View.VISIBLE);
+                }
+                else
+                    product.setVisibility(View.INVISIBLE);
+            }
+        });
         SearchView sr= (SearchView)findViewById(R.id.searchview1);
         sr.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
