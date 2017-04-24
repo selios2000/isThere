@@ -21,6 +21,8 @@ public class Scan {
     public static String lat= "37.491",lng="127.020"; //해커톤 위,경도
     public static String scanDist = "1";  //기본 스캔반경
 
+    public static String testItemName = "하이네켄";  //기본 스캔반경
+
     public static final String BR_ShopList = "samsung.sec.com.isthere.SHOP_LIST";
     public static final String BR_ItemList = "samsung.sec.com.isthere.ITEM_LIST";
     public static final String KEY_ShopList = "SHOP_LIST";

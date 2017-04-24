@@ -21,11 +21,13 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
     private ArrayList<Shop> mArrayList;
     private ArrayList<Shop> mFilteredList;
     private Context context;
+    private String itemName;
 
-    public DataCurrentItem_Adapter(ArrayList<Shop> arrayList, Context appcontext) {
+    public DataCurrentItem_Adapter(ArrayList<Shop> arrayList, Context appcontext, String item_name) {
         mArrayList = arrayList;
         mFilteredList = arrayList;
         context = appcontext;
+        itemName = item_name;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
 
     @Override
     public void onBindViewHolder(DataCurrentItem_Adapter.ViewHolder viewHolder, int i) {
-        viewHolder.itemid_current.setText(mFilteredList.get(i).getShop_id());
+        viewHolder.itemid_current.setText(itemName);
 
         Drawable drawable = context.getResources().getDrawable(R.drawable.conv_gs25, null);
         String shop_vendor = mFilteredList.get(i).getShop_vendor();
@@ -112,8 +114,9 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ReserveActivity.class);
-                    String  itemname= itemid_current.getText().toString();
-                    intent.putExtra("itemname",itemname);
+                    String  item_name = itemid_current.getText().toString();
+                    String  shop_id= itemid_current.getText().toString();
+                    intent.putExtra("itemname",itemName);
                     context.startActivity(intent);
                 }
             });

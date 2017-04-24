@@ -40,6 +40,7 @@ import static common.Scan.KEY_ShopList;
 import static common.Scan.lat;
 import static common.Scan.lng;
 import static common.Scan.scanDist;
+import static common.Scan.testItemName;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -255,12 +256,13 @@ public class MainActivity extends AppCompatActivity
                     Log.d("donggeon","shop_name"+shop_name);
                     Log.d("donggeon","marker_lat"+marker_lat);
                     Log.d("donggeon","marker_lng"+marker_lng);
-                    Double shop_distance = Double.parseDouble(String.format("%.1f",oneObject.getDouble("distance")));
+                    int shop_distance = (int) (oneObject.getDouble("distance")*1000.0d);
+                    Log.d("donggeon","distance "+shop_distance);
                     int stock_stock = oneObject.getInt("stock_stock");
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance,stock_stock);
                     shops.add(shop);
 
-                    mAdapterList_current = new DataCurrentItem_Adapter(shops,context);
+                    mAdapterList_current = new DataCurrentItem_Adapter(shops,context, testItemName);
                     mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
                 }
             }catch(JSONException e){
@@ -272,7 +274,7 @@ public class MainActivity extends AppCompatActivity
     private void getShopList(){
         NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_SHOPLIST, Scan.shopScanByItem);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("item_name", "하이네켄");
+        params.put("item_name", testItemName);
         params.put("shop_lat", lat);
         params.put("shop_lng", lng);
         params.put("distance", scanDist);
