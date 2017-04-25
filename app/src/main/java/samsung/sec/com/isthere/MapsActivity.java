@@ -117,7 +117,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance,stock_stock);
                     shops.add(shop);
 
-                    mAdapterList_current = new DataCurrentItem_Adapter(shops,context, mapsearchtext);
+                    mAdapterList_current = new DataCurrentItem_Adapter(shops,context);
+                    mAdapterList_current.setSearchItem(mapsearchtext);
                     mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
 
                     MarkerOptions marker = new MarkerOptions();

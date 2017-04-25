@@ -14,12 +14,15 @@ public class Scan {
     public static String shopScan = "/shop/scan";
     public static String shopDelete = "/shop/delete";
     public static String shopScanByItem = "/shop/scanByItem";
+
     public static String stockUpdate = "/stock/update";
     public static String itemList = "/item/shopItemList";
-    public static String itemImage = "/file?item_code=";
+    public static String itemImage = "/file?item_code="; //item 이미지를 받아옴
+    public static String itemSoldTop = "/item/itemSoldTop"; //Main - 실시간 인기 급상승
 
     public static String lat= "37.491",lng="127.020"; //해커톤 위,경도
     public static String scanDist = "1";  //기본 스캔반경
+    public static String itemLimit = "5";  //기본 스캔반경
 
     public static String testItemName = "하이네켄";  //기본 스캔반경
 

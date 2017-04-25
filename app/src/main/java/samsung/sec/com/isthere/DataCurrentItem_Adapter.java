@@ -21,13 +21,15 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
     private ArrayList<Shop> mArrayList;
     private ArrayList<Shop> mFilteredList;
     private Context context;
-    private String itemName;
+    private String mapsearchtext = "";
 
-    public DataCurrentItem_Adapter(ArrayList<Shop> arrayList, Context appcontext, String item_name) {
+    public DataCurrentItem_Adapter(ArrayList<Shop> arrayList, Context appcontext) {
         mArrayList = arrayList;
         mFilteredList = arrayList;
         context = appcontext;
-        itemName = item_name;
+    }
+    public void setSearchItem(String mapsearchtext){
+        this.mapsearchtext = mapsearchtext;
     }
 
     @Override
@@ -38,7 +40,11 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
 
     @Override
     public void onBindViewHolder(DataCurrentItem_Adapter.ViewHolder viewHolder, int i) {
-        viewHolder.itemid_current.setText(itemName);
+        viewHolder.shop_id = mFilteredList.get(i).getShop_id();
+        if(mapsearchtext.length() == 0)
+            viewHolder.itemid_current.setText(mFilteredList.get(i).getItem_soldTop());
+        else
+            viewHolder.itemid_current.setText(mapsearchtext);
 
         Drawable drawable = context.getResources().getDrawable(R.drawable.conv_gs25, null);
         String shop_vendor = mFilteredList.get(i).getShop_vendor();
@@ -52,7 +58,15 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
             drawable = context.getResources().getDrawable(R.drawable.conv_mini, null);
         viewHolder.item_img_current.setImageDrawable(drawable);
 
-        viewHolder.itemcount_current.setText(String.valueOf(mFilteredList.get(i).getStock_stock()));
+        String stock = "";
+        if(mFilteredList.get(i).getStock_stock() > 0)
+            stock = String.valueOf(mFilteredList.get(i).getStock_stock());
+        else {
+            viewHolder.itemcount_current.setVisibility(View.GONE);
+            viewHolder.itemcount_current_else.setVisibility(View.GONE);
+        }
+
+        viewHolder.itemcount_current.setText(stock);
         viewHolder.martname_current.setText(mFilteredList.get(i).getShop_name());
         viewHolder.martposition_current.setText(mFilteredList.get(i).getShop_info());
         viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance())+ "M");
@@ -97,9 +111,11 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
         private ImageView item_img_current;
         private TextView martname_current;
         private TextView martposition_current;
+        private TextView itemcount_current_else;
         private TextView martdistance_current;
         private LinearLayout itemidlayoutlist;
         private TextView textViewReserve1;
+        public String shop_id;
 
         public ViewHolder(View view) {
             super(view);
@@ -110,13 +126,14 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
             martposition_current = (TextView) view.findViewById(R.id.martposition_current);
             martdistance_current = (TextView) view.findViewById(R.id.martdistance_current);
             textViewReserve1 = (TextView) view.findViewById(R.id.textViewReserve1);
+            itemcount_current_else= (TextView) view.findViewById(R.id.itemcount_current_else);
             textViewReserve1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ReserveActivity.class);
                     String  item_name = itemid_current.getText().toString();
-                    String  shop_id= itemid_current.getText().toString();
-                    intent.putExtra("itemname",itemName);
+                    intent.putExtra("item_name",item_name);
+                    intent.putExtra("shop_id",shop_id);
                     context.startActivity(intent);
                 }
             });

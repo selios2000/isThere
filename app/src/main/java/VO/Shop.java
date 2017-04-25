@@ -14,7 +14,7 @@ public class Shop {
     private String shop_vendor;
     private int distance;
     private int stock_stock;
-
+    private String item_soldTop;
 
     public Shop(String shop_id, String shop_name, double shop_lat, double shop_lng, String shop_type , String shop_info, String shop_vendor, int shop_distance, int stock_stock) {
         this.shop_id = shop_id;
@@ -26,6 +26,18 @@ public class Shop {
         this.shop_vendor = shop_vendor;
         this.distance = shop_distance;
         this.stock_stock = stock_stock;
+    }
+    public Shop(String shop_id, String shop_name, double shop_lat, double shop_lng, String shop_type , String shop_info, String shop_vendor, int shop_distance, int stock_stock, String item_soldTop) {
+        this.shop_id = shop_id;
+        this.shop_name = shop_name;
+        this.shop_lat = shop_lat;
+        this.shop_lng = shop_lng;
+        this.shop_type = shop_type;
+        this.shop_info = shop_info;
+        this.shop_vendor = shop_vendor;
+        this.distance = shop_distance;
+        this.stock_stock = stock_stock;
+        this.item_soldTop = item_soldTop;
     }
 
     public String getShop_id() {
@@ -81,5 +93,11 @@ public class Shop {
     }
     public void setStock_stock(int stock_stock) {
         this.stock_stock = stock_stock;
+    }
+    public String getItem_soldTop() {
+        return item_soldTop;
+    }
+    public void setItem_soldTop(String item_soldTop) {
+        this.item_soldTop = item_soldTop;
     }
 }

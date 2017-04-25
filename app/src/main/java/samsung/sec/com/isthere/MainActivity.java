@@ -35,13 +35,16 @@ import Network.NetworkTask;
 import VO.Shop;
 import common.Scan;
 
+import static common.Scan.BR_ItemList;
 import static common.Scan.BR_ShopList;
+import static common.Scan.HTTP_ACTION_ITEMLIST;
 import static common.Scan.HTTP_ACTION_SHOPLIST;
+import static common.Scan.KEY_ItemList;
 import static common.Scan.KEY_ShopList;
+import static common.Scan.itemLimit;
 import static common.Scan.lat;
 import static common.Scan.lng;
 import static common.Scan.scanDist;
-import static common.Scan.testItemName;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +60,10 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView mRecyclerViewListItem_current;
     private DataCurrentItem_Adapter mAdapterList_current;
     private RecyclerView.LayoutManager layoutManager_list_current;
+
+    private ArrayList<String> mArrayListitemSoldTop;
+    private DataListAdapter mAdapterListitemSoldTop;
+    private RecyclerView mRecyclerViewListItemSoldTop;
 
     private ArrayList<Shop> shops;
 
@@ -175,37 +182,22 @@ public class MainActivity extends AppCompatActivity
         mAdapterList = new DataListAdapter(mArrayListitem, context);
         mRecyclerViewListItem.setAdapter(mAdapterList);
     }
-
-    private void getListitem_popular() {
-
-        RecyclerView mRecyclerViewListItem_popular;
-        ArrayList<String> mArrayListitem_popular;
-        DataListAdapter mAdapterList_popular;
+    //실시간 인기 급상승 품목목
+   private void getListitem_popular() {
         RecyclerView.LayoutManager layoutManager_list_popular;
-
-        mRecyclerViewListItem_popular = (RecyclerView) findViewById(R.id.recycle_popular);
-        mRecyclerViewListItem_popular.setHasFixedSize(true);
+        mRecyclerViewListItemSoldTop = (RecyclerView) findViewById(R.id.recycle_popular);
+        mRecyclerViewListItemSoldTop .setHasFixedSize(true);
         layoutManager_list_popular = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerViewListItem_popular.setLayoutManager(layoutManager_list_popular);
-        mArrayListitem_popular = new ArrayList<>();
-        mArrayListitem_popular.add("허니버터칩");
-        mArrayListitem_popular.add("갤럭시S8");
-        mArrayListitem_popular.add("포스틱");
-        mArrayListitem_popular.add("바나나우유");
-        mArrayListitem_popular.add("초코송이");
-        mAdapterList_popular = new DataListAdapter(mArrayListitem_popular, context);
-        mRecyclerViewListItem_popular.setAdapter(mAdapterList_popular);
+        mRecyclerViewListItemSoldTop.setLayoutManager(layoutManager_list_popular);
+       mArrayListitemSoldTop = new ArrayList<>();
     }
 
     private void getListitem_current() {
-
-
         mRecyclerViewListItem_current = (RecyclerView) findViewById(R.id.recycle_current);
         mRecyclerViewListItem_current.setHasFixedSize(true);
         layoutManager_list_current = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRecyclerViewListItem_current.setLayoutManager(layoutManager_list_current);
         //public DataCurrentItem(String itemid,String itemcount,String imgcurrent,String martname,String martposition,String martdistance){
-
     }
 
     @Override
@@ -219,8 +211,6 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -243,22 +233,26 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
     //서버에서 Shop 리스트 목록을 리시버로 받음 (NetworkTask)
     @Override
     public void onResume() {
         super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BR_ShopList);
-        registerReceiver(mShopListBR, filter);
+        IntentFilter shopfilter = new IntentFilter();
+        shopfilter.addAction(BR_ShopList);
+        registerReceiver(mShopListBR, shopfilter);
         getShopList();
+
+        IntentFilter itemfilter = new IntentFilter();
+        itemfilter.addAction(BR_ItemList);
+        registerReceiver(mItemListBR, itemfilter);
+        getSoldTopList();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         unregisterReceiver(mShopListBR);
+        unregisterReceiver(mItemListBR);
     }
     //리시버는 항상 해제 해줘야함
 
@@ -274,12 +268,11 @@ public class MainActivity extends AppCompatActivity
                     Double marker_lat = oneObject.getDouble("shop_lat");
                     Double marker_lng = oneObject.getDouble("shop_lng");
                     int shop_distance = (int) (oneObject.getDouble("distance") * 1000.0d);
-                    int stock_stock = oneObject.getInt("stock_stock");
-                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"), shop_distance, stock_stock);
+                    String item_soldtop = oneObject.getString("shop_soldtop");
+                    Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"), shop_distance, 0, item_soldtop);
                     shops.add(shop);
-
                     if (mAdapterList_current == null) {
-                        mAdapterList_current = new DataCurrentItem_Adapter(shops, context, testItemName);
+                        mAdapterList_current = new DataCurrentItem_Adapter(shops, context);
                         mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
                     }
                 }
@@ -290,12 +283,36 @@ public class MainActivity extends AppCompatActivity
     };
 
     private void getShopList() {
-        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_SHOPLIST, Scan.shopScanByItem);
+        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_SHOPLIST, Scan.shopScan);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("item_name", testItemName);
-        params.put("shop_lat", lat);
-        params.put("shop_lng", lng);
-        params.put("distance", scanDist);
+        params.put("lat", lat);
+        params.put("lng", lng);
+        params.put("dist", scanDist);
+        networkTask.execute(params);
+    }
+    BroadcastReceiver mItemListBR = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            try {
+                JSONArray jArray = new JSONArray(intent.getStringExtra(KEY_ItemList));
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject oneObject = jArray.getJSONObject(i); // Pulling items from the array
+                    String item_name = oneObject.getString("item_name");
+                    mArrayListitemSoldTop.add(item_name);
+                    if (mAdapterListitemSoldTop == null) {
+                        mAdapterListitemSoldTop = new DataListAdapter(mArrayListitemSoldTop, context);
+                        mRecyclerViewListItemSoldTop.setAdapter(mAdapterListitemSoldTop);
+                    }
+                }
+            } catch (JSONException e) {
+                Log.e("JSON Parsing error", e.toString());
+            }
+        }
+    };
+
+    private void getSoldTopList() {
+        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_ITEMLIST, Scan.itemSoldTop);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("item_limit", itemLimit);
         networkTask.execute(params);
     }
 }
