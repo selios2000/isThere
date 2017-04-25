@@ -40,6 +40,14 @@
             android:name=".ReserveActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ShopsActivity"
+            android:label="@string/title_activity_maps"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ShopDetailActivity"
+            android:label="@string/title_activity_maps"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 

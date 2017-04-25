@@ -34,13 +34,14 @@
                 android:id="@+id/textHI"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="70dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="70dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="Hi ,"
                 android:textAlignment="textStart"
                 android:textColor="#ffffff"
-                android:textSize="40dp" />
+                android:textSize="40dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,20 +52,24 @@
                     android:id="@+id/textIsthere"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="Is there a"
                     android:textAlignment="textStart"
                     android:textColor="#ffffff"
-                    android:textSize="40dp" />
+                    android:textSize="40dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textIstheretemplate"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="product"
                     android:textAlignment="textStart"
                     android:textColor="#53A0FE"
                     android:textSize="40dp"
+                    android:textStyle="bold"
                     android:visibility="invisible" />
             </LinearLayout>
 
@@ -82,12 +87,14 @@
                     android:layout_height="55dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="8dp"
-                    android:paddingTop="15dp"
                     android:background="@drawable/appbarshape"
                     android:elevation="4dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:paddingTop="15dp"
                     android:text="product"
                     android:textColor="#53A0FE"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textplace"
@@ -96,10 +103,12 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="8dp"
                     android:elevation="4dp"
+                    android:fontFamily="sans-serif-condensed"
                     android:paddingTop="15dp"
                     android:text="place"
                     android:textColor="#9e9797"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
