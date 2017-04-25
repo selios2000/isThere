@@ -124,16 +124,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         mRecyclerViewListItem.setAdapter(mAdapterList);
     }
     private void getAllitemListFromShop(){
-        RecyclerView mRecyclerViewListItem;
-        ArrayList<String> mArrayListitem;
-        DataShopAllListAdapter mAdapterList;
-        RecyclerView.LayoutManager layoutManager_list;
 
-        mRecyclerViewListItem = (RecyclerView) findViewById(R.id.recycle_shopAll);
-        mRecyclerViewListItem.setHasFixedSize(true);
-        layoutManager_list = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerViewListItem.setLayoutManager(layoutManager_list);
-        mArrayListitem = new ArrayList<>();
 
     }
 

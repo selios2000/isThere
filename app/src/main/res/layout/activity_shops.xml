@@ -85,8 +85,14 @@
                 android:background="@drawable/border"
                 android:textStyle="bold" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_shopAll"
+            <ListView
+                android:id="@+id/listview_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/textview_empty"
+                android:text="등록된 상품이 없습니다."
+                android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

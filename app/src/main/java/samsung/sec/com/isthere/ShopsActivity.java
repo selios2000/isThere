@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,14 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 import Network.NetworkTask;
+import VO.Item;
+import adapter.ListViewAdapter;
 import common.RoundedAvatarDrawable;
 import common.Scan;
 
@@ -44,6 +49,11 @@ public class ShopsActivity extends AppCompatActivity {
     private TextView textView_itemName, textView_itemPrice, textView_shopName;
     private ImageView imageView_itemImage;
     private Context context;
+
+    private ArrayList<Item> itemList;
+    private ListView listview ;
+    private ListViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +73,20 @@ public class ShopsActivity extends AppCompatActivity {
         textView_shopName.setText(titleText);
 
         shop_id = getIntent().getStringExtra("shop_id");
+        itemList = new ArrayList<Item>();
+        adapter = new ListViewAdapter() ;
+        listview = (ListView) findViewById(R.id.listview_item);
+        listview.setAdapter(adapter);
+        listview.setEmptyView((TextView)findViewById(R.id.textview_empty));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(titleText);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //call api
-        getItemListfromShop();
-        getAllitemListFromShop();
+        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_ITEMLIST, Scan.itemList);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("shop_id", shop_id);
+        networkTask.execute(params);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { // TODO Auto-generated method stub
@@ -88,7 +104,6 @@ public class ShopsActivity extends AppCompatActivity {
         IntentFilter itemfilter = new IntentFilter();
         itemfilter.addAction(BR_ItemList);
         registerReceiver(mItemListBR, itemfilter);
-       // getShopStock();
     }
 
     @Override
@@ -97,64 +112,31 @@ public class ShopsActivity extends AppCompatActivity {
         unregisterReceiver(mItemListBR);
     }
 
-    private void getShopStock() {
-        NetworkTask networkTask = new NetworkTask(context, HTTP_ACTION_ITEMLIST, Scan.itemResv);
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("shop_id", shop_id);
-       // params.put("item_name", item_name);
-        networkTask.execute(params);
-    }
-
-    private void getItemListfromShop() {
-
-        RecyclerView mRecyclerViewListItem;
-        ArrayList<String> mArrayListitem;
-        DataShopListAdapter mAdapterList;
-        RecyclerView.LayoutManager layoutManager_list;
-
-        mRecyclerViewListItem = (RecyclerView) findViewById(R.id.recycle_shopPopular);
-        mRecyclerViewListItem.setHasFixedSize(true);
-        layoutManager_list = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerViewListItem.setLayoutManager(layoutManager_list);
-        mArrayListitem = new ArrayList<>();
-        mArrayListitem.add("하이네켄");
-        mArrayListitem.add("트레비");
-        mArrayListitem.add("버드와이저");
-        mAdapterList = new DataShopListAdapter(mArrayListitem, context);
-        mRecyclerViewListItem.setAdapter(mAdapterList);
-    }
-    private void getAllitemListFromShop(){
-        RecyclerView mRecyclerViewListItem;
-        ArrayList<String> mArrayListitem;
-        DataShopAllListAdapter mAdapterList;
-        RecyclerView.LayoutManager layoutManager_list;
-
-        mRecyclerViewListItem = (RecyclerView) findViewById(R.id.recycle_shopAll);
-        mRecyclerViewListItem.setHasFixedSize(true);
-        layoutManager_list = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerViewListItem.setLayoutManager(layoutManager_list);
-        mArrayListitem = new ArrayList<>();
-
-    }
-
-
-    BroadcastReceiver mItemListBR = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
+    BroadcastReceiver mItemListBR = new BroadcastReceiver(){
+        public void onReceive(Context context, Intent intent){
             try {
+
                 JSONArray jArray = new JSONArray(intent.getStringExtra(KEY_ItemList));
                 for (int i = 0; i < jArray.length(); i++) {
-                    JSONObject oneObject = jArray.getJSONObject(i);
-                  //  textView_itemName.setText(item_name + "   (재고 : " + oneObject.getString("stock_stock") + ")");
-                    textView_itemPrice.setText(oneObject.getString("item_price")+ " 원");
-                  //  item_code = oneObject.getString("item_code");
-                  //  new LoadImage(item_code).execute();
+                    JSONObject oneObject = jArray.getJSONObject(i); // Pulling items from the array
+                    String item_code = oneObject.getString("item_code");
+                    String item_name = oneObject.getString("item_name");
+                    String item_price = oneObject.getString("item_price");
+                    String item_type = oneObject.getString("item_type");
+                    String item_info = oneObject.getString("item_info");
+                    String stock_stock = oneObject.getString("stock_stock");
+                    Item item = new Item(item_code, item_name, item_price, item_type, item_info, stock_stock);
+                    item.setStock_sold(oneObject.getInt("stock_sold"));
+                    new LoadImage(item_code).execute();
+                    itemList.add(item);
+                    adapter.addItem(item);
                 }
-            } catch (JSONException e) {
+                getItemListfromShop();
+            }catch(JSONException e){
                 Log.e("JSON Parsing error", e.toString());
             }
         }
     };
-
 
     private class LoadImage extends AsyncTask<String, String, Bitmap> {
         private Bitmap item_image;
@@ -183,14 +165,46 @@ public class ShopsActivity extends AppCompatActivity {
 
         protected void onPostExecute(Bitmap image) {
             if (image != null) {
-                RoundedAvatarDrawable tmpRoundedAvatarDrawable = new RoundedAvatarDrawable(image);
-                imageView_itemImage.setImageDrawable(tmpRoundedAvatarDrawable);
+                for (Item i : itemList){
+                    if(i.getItem_code().equals(item_code)) {
+                        RoundedAvatarDrawable tmpRoundedAvatarDrawable = new RoundedAvatarDrawable(image);
+                        i.setItem_image(tmpRoundedAvatarDrawable);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
                 Log.i("Image download", "Download complete!!");
-                imageView_itemImage.postInvalidate();
             } else {
                 Toast.makeText(context, "이미지가 존재하지 않습니다.",
                         Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    private void getItemListfromShop() {
+
+        RecyclerView mRecyclerViewListItem;
+        ArrayList<String> mArrayListitem;
+        DataListAdapter mAdapterList;
+        RecyclerView.LayoutManager layoutManager_list;
+
+        mRecyclerViewListItem = (RecyclerView) findViewById(R.id.recycle_shopPopular);
+        mRecyclerViewListItem.setHasFixedSize(true);
+        layoutManager_list = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerViewListItem.setLayoutManager(layoutManager_list);
+
+        Collections.sort(itemList, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                return (o1.getStock_sold() < o2.getStock_sold()) ? -1: (o1.getStock_sold() > o2.getStock_sold()) ? 1:0 ;
+            }
+        });
+
+        mArrayListitem = new ArrayList<>();
+        for (int i=0; (i<itemList.size()) && i <5; i++ ){
+            mArrayListitem.add(itemList.get(i).getItem_name());
+        }
+        mAdapterList = new DataListAdapter(mArrayListitem, context);
+        mRecyclerViewListItem.setAdapter(mAdapterList);
+    }
+
 }

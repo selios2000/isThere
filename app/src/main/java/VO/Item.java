@@ -14,6 +14,7 @@ public class Item {
     private String item_info;
     private Drawable item_image;
     private String stock_stock;
+    private int stock_sold;
 
     public Item(String item_code, String item_name, String item_price, String item_type, String item_info, String stock_stock) {
         this.item_code = item_code;
@@ -78,5 +79,13 @@ public class Item {
 
     public void setStock_stock(String stock_stock) {
         this.stock_stock = stock_stock;
+    }
+
+    public int getStock_sold() {
+        return stock_sold;
+    }
+
+    public void setStock_sold(int stock_sold) {
+        this.stock_sold = stock_sold;
     }
 }
