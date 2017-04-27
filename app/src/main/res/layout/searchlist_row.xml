@@ -11,23 +11,23 @@
     android:id="@+id/itemListlayoutidRoot"
     android:background="@drawable/listshape"
     card_view:cardCornerRadius="5dp">
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
         android:id="@+id/itemListlayoutid"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/itemListid"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="32dp"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
             android:textAlignment="center"
             android:textColor="#ffffff"
-            android:textSize="12dp"
+            android:textSize="14dp"
             android:textStyle="bold"
-            android:typeface="sans" />
+            android:typeface="normal" />
     </LinearLayout>
 </LinearLayout>

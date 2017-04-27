@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -110,13 +113,24 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 TextView product = (TextView) findViewById(R.id.textIstheretemplate);
+                //ImageView imageView2= (ImageView)findViewById(R.id.imageView2);
+
+             //   LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(imageView2.getLayoutParams().width, imageView2.getLayoutParams().height);
+              //  Log.d("donggeon",""+imageView2.getLayoutParams().width);
+              //  Log.d("donggeon",""+imageView2.getLayoutParams().height);
+              //  lp.setMargins(0, 250, 0, 0);
                 if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
                     product.setVisibility(View.VISIBLE);
+                 //   imageView2.setPadding(0,250,0,0);
+                   // imageView2.setLayoutParams(lp);
                 } else
                     product.setVisibility(View.INVISIBLE);
+                 //   imageView2.setPadding(0,0,0,0);
             }
         });
         SearchView sr = (SearchView) findViewById(R.id.searchview1);
+        View searchplate = (View)sr.findViewById(android.support.v7.appcompat.R.id.search_plate);
+        searchplate.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
         sr.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -146,7 +160,19 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
-
+        ImageView imageView2= (ImageView)findViewById(R.id.imageView2);
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                View drawerView =(View)findViewById(R.id.nav_view);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                } else {
+                    drawer.openDrawer(drawerView);
+                }
+            }
+        });
     }
 
     private void initViews() {

@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="8dp"
     android:id="@+id/contentLayout"
     android:layout_height="match_parent">
 
@@ -21,17 +20,18 @@
                 android:id="@+id/textView2"
                 android:paddingLeft="24dp"
                 android:layout_width="match_parent"
-                android:layout_height="24dp"
+                android:layout_height="32dp"
                 android:text="내가 자주 찾은 상품"
+                android:gravity="center_vertical"
                 android:textColor="#252525"
-                android:textSize="12dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.RecyclerView
                 android:paddingLeft="24dp"
                 android:id="@+id/recycle_frequent"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                  />
 
@@ -39,18 +39,18 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:paddingLeft="24dp"
-                android:layout_marginTop="10dp"
-                android:layout_height="24dp"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
                 android:text="실시간 인기 급상승!"
                 android:textColor="#252525"
-                android:textSize="12dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.RecyclerView
                 android:paddingLeft="24dp"
                 android:id="@+id/recycle_popular"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 />
 
@@ -58,17 +58,19 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
-                android:layout_height="wrap_content" />
+                android:layout_height="6dp" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:paddingLeft="24dp"
                 android:layout_width="match_parent"
-                android:layout_height="24dp"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
                 android:text="현재 내 주변 인기업체 및 상품"
                 android:textColor="#252525"
-                android:textSize="12dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.RecyclerView
