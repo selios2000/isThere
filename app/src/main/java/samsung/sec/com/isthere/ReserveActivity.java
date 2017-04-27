@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +39,8 @@ import static common.Scan.selectedUrl;
 public class ReserveActivity extends AppCompatActivity {
 
     private String shop_id, item_name, item_code;
-    private TextView textView_itemName, textView_itemPrice;
-    private ImageView imageView_itemImage;
+    private TextView textView_itemName, textView_itemPrice,textView_itemcount,textView_itemsum;
+    private ImageView imageView_itemImage,imageView_plus,imageView_minus;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,12 @@ public class ReserveActivity extends AppCompatActivity {
         context = this;
         textView_itemName = (TextView)findViewById(R.id.textView_itemName);
         textView_itemPrice = (TextView)findViewById(R.id.textView_itemPrice);
+        textView_itemcount = (TextView)findViewById(R.id.textView_itemcount);
+        textView_itemsum = (TextView)findViewById(R.id.textView_itemsum);
+
         imageView_itemImage = (ImageView) findViewById(R.id.imageView_itemImage);
+        imageView_plus = (ImageView) findViewById(R.id.imageView_plus);
+        imageView_minus = (ImageView) findViewById(R.id.imageView_minus);
 
         item_name = getIntent().getStringExtra("item_name");
         shop_id = getIntent().getStringExtra("shop_id");
@@ -57,6 +63,32 @@ public class ReserveActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("예약하기");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        imageView_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count= Integer.parseInt(textView_itemcount.getText().toString());
+                int sum=  Integer.parseInt(textView_itemsum.getText().toString());
+                int origin_pirce= sum/count;
+                int plus= count+1;
+                textView_itemcount.setText( String.valueOf(plus));
+                textView_itemsum.setText( String.valueOf(plus*origin_pirce));
+            }
+        });
+        imageView_minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count= Integer.parseInt(textView_itemcount.getText().toString());
+                if(count!=1) {
+                    int sum = Integer.parseInt(textView_itemsum.getText().toString());
+                    int origin_pirce = sum / count;
+                    int plus = count -1;
+                    textView_itemcount.setText( String.valueOf(plus));
+                    textView_itemsum.setText( String.valueOf(plus*origin_pirce));
+                }
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { // TODO Auto-generated method stub
@@ -97,8 +129,9 @@ public class ReserveActivity extends AppCompatActivity {
                 JSONArray jArray = new JSONArray(intent.getStringExtra(KEY_ItemList));
                 for (int i = 0; i < jArray.length(); i++) {
                     JSONObject oneObject = jArray.getJSONObject(i);
-                    textView_itemName.setText(item_name + "   (재고 : " + oneObject.getString("stock_stock") + ")");
-                    textView_itemPrice.setText(oneObject.getString("item_price")+ " 원");
+                    textView_itemName.setText(item_name);
+                    textView_itemPrice.setText("재고 : " + oneObject.getString("stock_stock") );
+                    textView_itemsum.setText(oneObject.getString("item_price"));
                     item_code = oneObject.getString("item_code");
                     new LoadImage(item_code).execute();
                 }

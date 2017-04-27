@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -68,7 +69,10 @@ public class MainActivity extends AppCompatActivity
     private DataListAdapter mAdapterListitemSoldTop;
     private RecyclerView mRecyclerViewListItemSoldTop;
 
+    private TextView textproduct;
+    private TextView textplace;
     private ArrayList<Shop> shops;
+    private boolean productFlag=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +124,10 @@ public class MainActivity extends AppCompatActivity
               //  Log.d("donggeon",""+imageView2.getLayoutParams().height);
               //  lp.setMargins(0, 250, 0, 0);
                 if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                    if(productFlag==true)
+                        product.setText("product");
+                    else
+                        product.setText("place");
                     product.setVisibility(View.VISIBLE);
                  //   imageView2.setPadding(0,250,0,0);
                    // imageView2.setLayoutParams(lp);
@@ -171,6 +179,32 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     drawer.openDrawer(drawerView);
                 }
+            }
+        });
+
+        textproduct= (TextView)findViewById(R.id.textproduct);
+        textplace= (TextView)findViewById(R.id.textplace);
+
+        textproduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable drawable = context.getResources().getDrawable(R.drawable.appbarshape);
+                textproduct.setBackground(drawable);
+                textproduct.setTextColor(Color.parseColor("#53A0FE"));
+                textplace.setBackgroundColor(Color.parseColor("#1C2237"));
+                textplace.setTextColor(Color.parseColor("#9e9797"));
+                productFlag=true;
+            }
+        });
+        textplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable drawable = context.getResources().getDrawable(R.drawable.appbarshape);
+                textplace.setBackground(drawable);
+                textplace.setTextColor(Color.parseColor("#53A0FE"));
+                textproduct.setBackgroundColor(Color.parseColor("#1C2237"));
+                textproduct.setTextColor(Color.parseColor("#9e9797"));
+                productFlag=false;
             }
         });
     }
