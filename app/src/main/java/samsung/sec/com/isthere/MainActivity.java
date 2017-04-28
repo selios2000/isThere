@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(context, MapsActivity.class);
                 //지도 액티비티로 이동
                 startActivity(intent);
-            }
+            }//C9FF24
         });*/
         // search view
         initViews();
@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Drawable drawable = context.getResources().getDrawable(R.drawable.appbarshape);
                 textproduct.setBackground(drawable);
-                textproduct.setTextColor(Color.parseColor("#53A0FE"));
-                textplace.setBackgroundColor(Color.parseColor("#1C2237"));
+                textproduct.setTextColor(Color.parseColor("#ffffff"));
+                textplace.setBackgroundColor(Color.parseColor("#005D78"));
                 textplace.setTextColor(Color.parseColor("#9e9797"));
                 productFlag=true;
             }
@@ -202,8 +202,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Drawable drawable = context.getResources().getDrawable(R.drawable.appbarshape);
                 textplace.setBackground(drawable);
-                textplace.setTextColor(Color.parseColor("#53A0FE"));
-                textproduct.setBackgroundColor(Color.parseColor("#1C2237"));
+                textplace.setTextColor(Color.parseColor("#ffffff"));
+                textproduct.setBackgroundColor(Color.parseColor("#005D78"));
                 textproduct.setTextColor(Color.parseColor("#9e9797"));
                 productFlag=false;
             }

@@ -153,8 +153,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.title("BlueHack Hackathon");
         markerOptions.draggable(true);
         //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        int height = 150;
-        int width = 150;
+        int height = 320;
+        int width = 320;
+
         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.myplace_pin);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);

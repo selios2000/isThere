@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,8 +27,8 @@
                 android:id="@+id/imageView2"
                 android:layout_width="32dp"
                 android:layout_height="48dp"
-                android:visibility="visible"
                 android:paddingLeft="-7dp"
+                android:visibility="visible"
                 app:srcCompat="@drawable/ham" />
 
             <TextView
@@ -66,9 +66,8 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="product"
                     android:textAlignment="textStart"
-                    android:textColor="#53A0FE"
+                    android:textColor="#C9FF24"
                     android:textSize="40dp"
-                    android:textStyle="bold"
                     android:visibility="invisible" />
             </LinearLayout>
 
@@ -83,30 +82,27 @@
                 <TextView
                     android:id="@+id/textproduct"
                     android:layout_width="wrap_content"
-                    android:layout_height="55dp"
+                    android:layout_height="65dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="8dp"
                     android:background="@drawable/appbarshape"
                     android:elevation="4dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:paddingTop="15dp"
+                    android:paddingTop="8dp"
                     android:text="product"
-                    android:textColor="#53A0FE"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textColor="#ffffff"
+                    android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/textplace"
                     android:layout_width="wrap_content"
-                    android:layout_height="55dp"
+                    android:layout_height="65dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="8dp"
                     android:elevation="4dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:paddingTop="15dp"
+                    android:paddingTop="8dp"
                     android:text="place"
                     android:textColor="#9e9797"
-                    android:textSize="20dp" />
+                    android:textSize="30dp" />
             </LinearLayout>
         </LinearLayout>
 
