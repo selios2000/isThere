@@ -216,7 +216,8 @@ public class MainActivity extends AppCompatActivity
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mArrayList = new ArrayList<>();
-        mArrayList.add("허니버터칩");
+        mArrayList.add("너구리");
+        mArrayList.add("아사히");
         mAdapter = new DataAdapter(mArrayList, context);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.INVISIBLE);
@@ -238,8 +239,8 @@ public class MainActivity extends AppCompatActivity
         mArrayListitem.add("하이네켄");
         mArrayListitem.add("트레비");
         mArrayListitem.add("버드와이저");
-        mArrayListitem.add("필스너");
-        mArrayListitem.add("토레타");
+        mArrayListitem.add("레쓰비");
+        mArrayListitem.add("2프로");
         mAdapterList = new DataListAdapter(mArrayListitem, context);
         mRecyclerViewListItem.setAdapter(mAdapterList);
     }
