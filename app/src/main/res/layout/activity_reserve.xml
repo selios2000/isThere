@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="sans-serif-condensed"
-                android:text="로 결제하기"
+                android:text="로 예약하기"
                 android:textAlignment="textStart"
                 android:textColor="#ffffff"
                 android:textSize="16dp"
