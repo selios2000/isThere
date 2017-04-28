@@ -52,6 +52,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String mapsearchtext;
     private ArrayList<Shop> shops;
     private ArrayList<MarkerOptions> markers;
+    private int selPos = 0;
 
     private RecyclerView mRecyclerViewListItem_current;
     private DataCurrentItem_Adapter_back mAdapterList_current;
@@ -173,6 +174,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             public boolean onMarkerClick(Marker marker) {
+                for(int i=0;i<shops.size();i++) {
+                    if(shops.get(i).getShop_id().equals(marker.getSnippet())) {
+                        layoutManager_list_current.scrollToPosition(i);
+
+                        layoutManager_list_current.findViewByPosition(selPos).findViewById(R.id.itemid_current_back).setAlpha(1);
+                        layoutManager_list_current.findViewByPosition(i).findViewById(R.id.itemid_current_back).setAlpha(0);
+                        selPos = i;
+                    }
+                }
                 return false;
             }
         });
