@@ -141,6 +141,7 @@
                         android:id="@+id/textViewReserve1_back"
                         android:layout_width="100dp"
                         android:layout_height="24dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@drawable/reserveshape"
                         android:text="예약하기"
                         android:gravity="center"

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcel;
@@ -179,17 +180,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             public boolean onMarkerClick(Marker marker) {
+                Drawable viewshapen = context.getResources().getDrawable(R.drawable.listviewshape);
+                final Drawable viewshapen_focus = context.getResources().getDrawable(R.drawable.listviewshape_focus);
                 for(int i=0;i<shops.size();i++) {
                     if(shops.get(i).getShop_id().equals(marker.getSnippet())) {
                         layoutManager_list_current.scrollToPosition(i);
-                        layoutManager_list_current.findViewByPosition(selPos).findViewById(R.id.itemid_current_back).setAlpha(1);
-
                         index = i;
-
+                        layoutManager_list_current.findViewByPosition(selPos).findViewById(R.id.itemListlayoutcurrentid).setBackground(viewshapen);
                         mRunnable = new Runnable() {
                             @Override
                             public void run() {
-                                layoutManager_list_current.findViewByPosition(index).findViewById(R.id.itemid_current_back).setAlpha(0);
+
+                                layoutManager_list_current.findViewByPosition(index).findViewById(R.id.itemListlayoutcurrentid).setBackground(viewshapen_focus);
+
                                 selPos = index;
                             }
                         };
