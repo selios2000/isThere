@@ -21,7 +21,7 @@
                 android:paddingLeft="24dp"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:text="내가 자주 찾은 상품"
+                android:text="내가 자주 찾는 상품"
                 android:gravity="center_vertical"
                 android:textColor="#252525"
                 android:textSize="15dp"

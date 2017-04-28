@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +88,15 @@ public class ReserveActivity extends AppCompatActivity {
                     textView_itemcount.setText( String.valueOf(plus));
                     textView_itemsum.setText( String.valueOf(plus*origin_pirce));
                 }
+            }
+        });
+        LinearLayout reserveLayout = (LinearLayout)findViewById(R.id.reserveLayout);
+        reserveLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(ReserveActivity.this, SamsungPayActivity.class));
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_stay);
             }
         });
     }

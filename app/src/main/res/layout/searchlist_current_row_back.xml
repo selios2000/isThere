@@ -27,7 +27,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/item_img_current"
+                    android:id="@+id/item_img_current_back"
                     android:layout_width="60dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="15dp"
@@ -42,7 +42,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <ToggleButton
-                        android:id="@+id/toggleButton2"
+                        android:id="@+id/toggleButton2_back"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="right"
@@ -53,7 +53,7 @@
                         android:textOn="" />
 
                     <TextView
-                        android:id="@+id/martname_current"
+                        android:id="@+id/martname_current_back"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -65,7 +65,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/martposition_current"
+                        android:id="@+id/martposition_current_back"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -75,7 +75,7 @@
                         android:textSize="13dp" />
 
                     <TextView
-                        android:id="@+id/martdistance_current"
+                        android:id="@+id/martdistance_current_back"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -98,14 +98,14 @@
 
 
             <LinearLayout
-                android:id="@+id/layout_itemcount"
+                android:id="@+id/layout_itemcount_back"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.9"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/itemid_current"
+                    android:id="@+id/itemid_current_back"
                     android:layout_width="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -120,7 +120,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/itemcount_current"
+                    android:id="@+id/itemcount_current_back"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.8"
@@ -138,7 +138,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/textViewReserve1"
+                        android:id="@+id/textViewReserve1_back"
                         android:layout_width="100dp"
                         android:layout_height="24dp"
                         android:background="@drawable/reserveshape"

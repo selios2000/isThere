@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     private FrameLayout rlayout;
 
     private RecyclerView mRecyclerViewListItem_current;
-    private DataCurrentItem_Adapter mAdapterList_current;
+    private DataCurrentItem_Adapter_back mAdapterList_current;
     private RecyclerView.LayoutManager layoutManager_list_current;
 
     private ArrayList<String> mArrayListitemSoldTop;
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity
             public void onPanelSlide(View panel, float slideOffset) {
 
             }
-
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 TextView product = (TextView) findViewById(R.id.textIstheretemplate);
@@ -128,9 +127,11 @@ public class MainActivity extends AppCompatActivity
                         product.setText("product");
                     else
                         product.setText("place");
+                    LinearLayout mainLayout = (LinearLayout)findViewById(R.id.mainLayout);
                     product.setVisibility(View.VISIBLE);
                  //   imageView2.setPadding(0,250,0,0);
                    // imageView2.setLayoutParams(lp);
+                    // indicator #169EA4
                 } else
                     product.setVisibility(View.INVISIBLE);
                  //   imageView2.setPadding(0,0,0,0);
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mArrayList = new ArrayList<>();
-        mArrayList.add("하이네켄");
+        mArrayList.add("허니버터칩");
         mAdapter = new DataAdapter(mArrayList, context);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.INVISIBLE);
@@ -332,7 +333,7 @@ public class MainActivity extends AppCompatActivity
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"), shop_distance, 0, item_soldtop);
                     shops.add(shop);
                     if (mAdapterList_current == null) {
-                        mAdapterList_current = new DataCurrentItem_Adapter(shops, context);
+                        mAdapterList_current = new DataCurrentItem_Adapter_back(shops, context);
                         mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
                     }
                 }
