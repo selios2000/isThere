@@ -66,7 +66,7 @@ public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurre
            // viewHolder.itemcount_current_else.setVisibility(View.GONE);
         }
 
-        viewHolder.itemcount_current.setText(stock);
+        viewHolder.itemcount_current.setText(stock + " 개 남음");
         viewHolder.martname_current.setText(mFilteredList.get(i).getShop_name());
         viewHolder.martposition_current.setText(mFilteredList.get(i).getShop_info());
         viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance())+ "M");

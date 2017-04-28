@@ -80,20 +80,22 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
         viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance())+ "M");
 
         Resources r = context.getResources();
-        if(mFilteredList.get(i).getItem_soldTop().contains("아사히"))
-            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.asahi));
-        if(mFilteredList.get(i).getItem_soldTop().contains("하이네켄"))
-            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.hein));
-        if(mFilteredList.get(i).getItem_soldTop().contains("포스틱"))
-            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.potato));
-        if(mFilteredList.get(i).getItem_soldTop().contains("대니쉬"))
-            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.milk));
-        if(mFilteredList.get(i).getItem_soldTop().contains("풀무"))
-            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.pul));
-        if(mFilteredList.get(i).getItem_soldTop().contains("윌"))
-            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.will));
-        if(mFilteredList.get(i).getItem_soldTop().contains("트레비"))
-            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.trevi));
+        if(mFilteredList.get(i).getItem_soldTop() != null) {
+            if (mFilteredList.get(i).getItem_soldTop().contains("아사히"))
+                viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.asahi));
+            if (mFilteredList.get(i).getItem_soldTop().contains("하이네켄"))
+                viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.hein));
+            if (mFilteredList.get(i).getItem_soldTop().contains("포스틱"))
+                viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.potato));
+            if (mFilteredList.get(i).getItem_soldTop().contains("대니쉬"))
+                viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.milk));
+            if (mFilteredList.get(i).getItem_soldTop().contains("풀무"))
+                viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.pul));
+            if (mFilteredList.get(i).getItem_soldTop().contains("윌"))
+                viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.will));
+            if (mFilteredList.get(i).getItem_soldTop().contains("트레비"))
+                viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.trevi));
+        }
     }
 
     @Override
