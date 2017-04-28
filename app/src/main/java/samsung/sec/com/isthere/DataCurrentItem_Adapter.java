@@ -127,11 +127,11 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
             martdistance_current = (TextView) view.findViewById(R.id.martdistance_current);
             textViewReserve1 = (TextView) view.findViewById(R.id.textViewReserve1);
             itemcount_current_else= (TextView) view.findViewById(R.id.itemcount_current_else);
-            martposition_current.setOnClickListener(new View.OnClickListener() {
+            item_img_current.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShopsActivity.class);
-                    String  item_name = itemid_current.getText().toString();
+                    String item_name = itemid_current.getText().toString();
                     intent.putExtra("martname_current",martname_current.getText().toString());
                     intent.putExtra("martposition_current",martposition_current.getText().toString());
                     intent.putExtra("shop_id",shop_id);
