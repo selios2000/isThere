@@ -2,6 +2,18 @@ package samsung.sec.com.isthere;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Region;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +33,7 @@ import VO.Shop;
 public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentItem_Adapter.ViewHolder> implements Filterable {
     private ArrayList<Shop> mArrayList;
     private ArrayList<Shop> mFilteredList;
-    private Context context;
+    private static Context context;
     private String mapsearchtext = "";
 
     public DataCurrentItem_Adapter(ArrayList<Shop> arrayList, Context appcontext) {
@@ -61,15 +74,26 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
         String stock = "";
         if(mFilteredList.get(i).getStock_stock() > 0)
             stock = String.valueOf(mFilteredList.get(i).getStock_stock());
-        else {
-            viewHolder.itemcount_current.setVisibility(View.GONE);
-            viewHolder.itemcount_current_else.setVisibility(View.GONE);
-        }
 
-        viewHolder.itemcount_current.setText(stock);
         viewHolder.martname_current.setText(mFilteredList.get(i).getShop_name());
         viewHolder.martposition_current.setText(mFilteredList.get(i).getShop_info());
         viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance())+ "M");
+
+        Resources r = context.getResources();
+        if(mFilteredList.get(i).getItem_soldTop().contains("아사히"))
+            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.asahi));
+        if(mFilteredList.get(i).getItem_soldTop().contains("하이네켄"))
+            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.hein));
+        if(mFilteredList.get(i).getItem_soldTop().contains("포스틱"))
+            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.potato));
+        if(mFilteredList.get(i).getItem_soldTop().contains("대니쉬"))
+            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.milk));
+        if(mFilteredList.get(i).getItem_soldTop().contains("풀무"))
+            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.pul));
+        if(mFilteredList.get(i).getItem_soldTop().contains("윌"))
+            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.will));
+        if(mFilteredList.get(i).getItem_soldTop().contains("트레비"))
+            viewHolder.frameLayoutUp.setBackground(r.getDrawable(R.drawable.trevi));
     }
 
     @Override
@@ -107,26 +131,23 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView itemid_current;
-        private TextView itemcount_current;
         private ImageView item_img_current;
         private TextView martname_current;
         private TextView martposition_current;
-        private TextView itemcount_current_else;
         private TextView martdistance_current;
-        private LinearLayout itemidlayoutlist;
         private TextView textViewReserve1;
+        private FrameLayout frameLayoutUp;
         public String shop_id;
 
         public ViewHolder(View view) {
             super(view);
             itemid_current = (TextView) view.findViewById(R.id.itemid_current);
-            itemcount_current = (TextView) view.findViewById(R.id.itemcount_current);
             item_img_current = (ImageView) view.findViewById(R.id.item_img_current);
             martname_current = (TextView) view.findViewById(R.id.martname_current);
             martposition_current = (TextView) view.findViewById(R.id.martposition_current);
             martdistance_current = (TextView) view.findViewById(R.id.martdistance_current);
             textViewReserve1 = (TextView) view.findViewById(R.id.textViewReserve1);
-            itemcount_current_else= (TextView) view.findViewById(R.id.itemcount_current_else);
+            frameLayoutUp = (FrameLayout) view.findViewById(R.id.framelayout_up);
             item_img_current.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,4 +171,17 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
             });
         }
     }
+
+
+    private Drawable SampleView() {
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.test);
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int y = height / 3;
+        Bitmap roundImage = Bitmap.createBitmap( image , 0, y, width, height-y*2 );
+
+        return new BitmapDrawable(context.getResources(), roundImage);
+    }
+
 }
+

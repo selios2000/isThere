@@ -7,77 +7,34 @@
     android:layout_marginRight="6dp"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/itemListlayoutcurrentid"
+    <FrameLayout
+        android:id="@+id/framelayout_up"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="80dp">
 
-        <LinearLayout
+        <ToggleButton
+            android:id="@+id/toggleButton2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/toggle"
+            android:textOff=""
+            android:textOn="" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/itemid_current"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/itemid_current"
-                    android:layout_width="102dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:gravity="center"
-                    android:text="허니"
-                    android:textAlignment="viewStart"
-                    android:textColor="#252525"
-                    android:textSize="13dp"
-                    android:textStyle="bold" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton2"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:gravity="bottom"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/toggle"
-                    android:textOff=""
-                    android:textOn="" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_weight="1"
-                android:background="@drawable/border_card"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/itemcount_current"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="6dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="#53A0FE"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/itemcount_current_else"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif"
-                    android:text="개 남음"
-                    android:textColor="#53A0FE"
-                    android:textSize="13dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="item title"
+            android:textColor="#252525"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -151,7 +108,4 @@
                     android:textSize="12dp"
                     android:textStyle="bold" />
             </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
 </LinearLayout>
