@@ -58,6 +58,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Handler mHandler;
     private Runnable mRunnable;
     private static int index;
+    private String selShopID;
 
 
     private RecyclerView mRecyclerViewListItem_current;
@@ -130,7 +131,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
 
                     MarkerOptions marker = new MarkerOptions();
-                    marker.position(new LatLng(marker_lat, marker_lng)).title(shop_name+" : "+shop_info).snippet(shop_id);
+                    marker.position(new LatLng(marker_lat, marker_lng)).title(shop_name).snippet(shop_info);
                     int height = 150;
                     int width = 150;
                     BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.stock_color);
@@ -183,9 +184,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Drawable viewshapen = context.getResources().getDrawable(R.drawable.listviewshape);
                 final Drawable viewshapen_focus = context.getResources().getDrawable(R.drawable.listviewshape_focus);
                 for(int i=0;i<shops.size();i++) {
-                    if(shops.get(i).getShop_id().equals(marker.getSnippet())) {
+                    if(shops.get(i).getShop_name().equals(marker.getTitle()) && shops.get(i).getShop_info().equals(marker.getSnippet()) ) {
                         layoutManager_list_current.scrollToPosition(i);
                         index = i;
+                        selShopID = shops.get(i).getShop_id();
                         layoutManager_list_current.findViewByPosition(selPos).findViewById(R.id.itemListlayoutcurrentid).setBackground(viewshapen);
                         mRunnable = new Runnable() {
                             @Override
@@ -209,10 +211,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Intent intent = new Intent(context, ShopsActivity.class);
-                String[] s = marker.getTitle().split(" : ");
-                intent.putExtra("martname_current",s[0]);
-                intent.putExtra("martposition_current", s[1]);
-                intent.putExtra("shop_id",marker.getSnippet());
+                intent.putExtra("martname_current",marker.getTitle());
+                intent.putExtra("martposition_current", marker.getSnippet());
+                intent.putExtra("shop_id",selShopID);
                 context.startActivity(intent);
                 Toast.makeText(context, "'"+marker.getTitle()+"' 전체 상품 list "+ marker.getSnippet(), Toast.LENGTH_LONG).show();
             }
