@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -116,12 +117,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     int stock_stock = oneObject.getInt("stock_stock");
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance,stock_stock);
                     shops.add(shop);
-                    String shopid = shop_id;
+
                     mAdapterList_current = new DataCurrentItem_Adapter_back(shops,context);
                     mAdapterList_current.setSearchItem(mapsearchtext);
                     mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
+
                     MarkerOptions marker = new MarkerOptions();
-                    marker.position(new LatLng(marker_lat, marker_lng)).title(shop_info).snippet(shop_name);
+                    marker.position(new LatLng(marker_lat, marker_lng)).title(shop_name+" : "+shop_info).snippet(shop_id);
                     int height = 150;
                     int width = 150;
                     BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.stock_color);
@@ -171,8 +173,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             public boolean onMarkerClick(Marker marker) {
-
                 return false;
+            }
+        });
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
+
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(context, ShopsActivity.class);
+                String[] s = marker.getTitle().split(" : ");
+                intent.putExtra("martname_current",s[0]);
+                intent.putExtra("martposition_current", s[1]);
+                intent.putExtra("shop_id",marker.getSnippet());
+                context.startActivity(intent);
+                Toast.makeText(context, "'"+marker.getTitle()+"' 전체 상품 list "+ marker.getSnippet(), Toast.LENGTH_LONG).show();
             }
         });
     }
