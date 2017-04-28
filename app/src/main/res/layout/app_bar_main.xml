@@ -87,35 +87,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="56dp"
                 android:layout_weight="0.41"
                 android:gravity="left|center"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textproduct"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/img_product"
+                    android:layout_width="80dp"
                     android:layout_height="65dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/appbarshape"
-                    android:elevation="4dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:paddingTop="8dp"
-                    android:text="product"
-                    android:textColor="#ffffff"
-                    android:textSize="30dp" />
+                    android:layout_marginRight="8dp"
+                    app:srcCompat="@drawable/pro_on" />
 
-                <TextView
-                    android:id="@+id/textplace"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/img_place"
+                    android:layout_width="80dp"
                     android:layout_height="65dp"
-                    android:layout_marginRight="10dp"
-                    android:elevation="4dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:paddingTop="8dp"
-                    android:text="place"
-                    android:textColor="#9e9797"
-                    android:textSize="30dp" />
+                    app:srcCompat="@drawable/pla_off" />
+
             </LinearLayout>
         </LinearLayout>
 

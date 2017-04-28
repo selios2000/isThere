@@ -62,15 +62,15 @@ public class MainActivity extends AppCompatActivity
     private FrameLayout rlayout;
 
     private RecyclerView mRecyclerViewListItem_current;
-    private DataCurrentItem_Adapter_back mAdapterList_current;
+    private DataCurrentItem_Adapter mAdapterList_current;
     private RecyclerView.LayoutManager layoutManager_list_current;
 
     private ArrayList<String> mArrayListitemSoldTop;
     private DataListAdapter mAdapterListitemSoldTop;
     private RecyclerView mRecyclerViewListItemSoldTop;
 
-    private TextView textproduct;
-    private TextView textplace;
+    private ImageView img_product;
+    private ImageView img_place;
     private ArrayList<Shop> shops;
     private boolean productFlag=true;
 
@@ -183,28 +183,28 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        textproduct= (TextView)findViewById(R.id.textproduct);
-        textplace= (TextView)findViewById(R.id.textplace);
+        img_product= (ImageView)findViewById(R.id.img_product);
+        img_place= (ImageView)findViewById(R.id.img_place);
 
-        textproduct.setOnClickListener(new View.OnClickListener() {
+        img_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Drawable drawable = context.getResources().getDrawable(R.drawable.appbarshape);
-                textproduct.setBackground(drawable);
-                textproduct.setTextColor(Color.parseColor("#ffffff"));
-                textplace.setBackgroundColor(Color.parseColor("#005D78"));
-                textplace.setTextColor(Color.parseColor("#9e9797"));
+                Drawable drawable_pro = context.getResources().getDrawable(R.drawable.pro_on);
+                Drawable drawable_pl = context.getResources().getDrawable(R.drawable.pla_off);
+
+                img_product.setImageDrawable(drawable_pro);
+                img_place.setImageDrawable(drawable_pl);
                 productFlag=true;
             }
         });
-        textplace.setOnClickListener(new View.OnClickListener() {
+        img_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Drawable drawable = context.getResources().getDrawable(R.drawable.appbarshape);
-                textplace.setBackground(drawable);
-                textplace.setTextColor(Color.parseColor("#ffffff"));
-                textproduct.setBackgroundColor(Color.parseColor("#005D78"));
-                textproduct.setTextColor(Color.parseColor("#9e9797"));
+                Drawable drawable_pro = context.getResources().getDrawable(R.drawable.pro_off);
+                Drawable drawable_pl = context.getResources().getDrawable(R.drawable.pla_on);
+
+                img_product.setImageDrawable(drawable_pro);
+                img_place.setImageDrawable(drawable_pl);
                 productFlag=false;
             }
         });
@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"), shop_distance, 0, item_soldtop);
                     shops.add(shop);
                     if (mAdapterList_current == null) {
-                        mAdapterList_current = new DataCurrentItem_Adapter_back(shops, context);
+                        mAdapterList_current = new DataCurrentItem_Adapter(shops, context);
                         mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
                     }
                 }
