@@ -25,72 +25,75 @@
 
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/itemid_current"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:text="item title"
-            android:textColor="#252525"
-            android:textSize="15dp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/itemid_current"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:text="item title"
+        android:textColor="#252525"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
-            <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/item_img_current"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_horizontal" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/item_layout_current"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/martname_current"
                 android:layout_width="match_parent"
-                android:layout_height="79dp"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:paddingBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="#252525"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/item_img_current"
-                    android:layout_width="60dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center" />
+            <TextView
+                android:id="@+id/martposition_current"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textColor="#252525"
+                android:textSize="12dp" />
 
-                <LinearLayout
-                    android:layout_width="90dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/martname_current"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textColor="#252525"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/martposition_current"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:textColor="#252525"
-                        android:textSize="12dp" />
-
-                    <TextView
-                        android:id="@+id/martdistance_current"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
-                        android:paddingLeft="2dp"
-                        android:textColor="#252525"
-                        android:textSize="12dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/martdistance_current"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingLeft="2dp"
+                android:textColor="#252525"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_marginTop="2dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp"

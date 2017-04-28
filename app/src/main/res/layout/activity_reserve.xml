@@ -157,7 +157,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:paddingRight="3dp"
-                android:background="@color/colorPrimary"
+                android:background="#169EA4"
                 app:srcCompat="@drawable/pay_logo" />
 
             <TextView

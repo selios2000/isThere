@@ -66,12 +66,17 @@ public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurre
            // viewHolder.itemcount_current_else.setVisibility(View.GONE);
         }
 
-        viewHolder.itemcount_current.setText(stock);
+        viewHolder.itemcount_current.setText(stock+ " 개 남음");
         viewHolder.martname_current.setText(mFilteredList.get(i).getShop_name());
         viewHolder.martposition_current.setText(mFilteredList.get(i).getShop_info());
         viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance())+ "M");
     }
-
+    public void setFocus(DataCurrentItem_Adapter_back.ViewHolder viewHolder,String findText){
+        int size= getItemCount();
+        for(int i= 0 ; i<size;i++){
+           // if(viewHolder.get)
+        }
+    }
     @Override
     public int getItemCount() {
         return mFilteredList.size();
@@ -131,6 +136,17 @@ public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurre
             martdistance_current = (TextView) view.findViewById(R.id.martdistance_current_back);
             textViewReserve1 = (TextView) view.findViewById(R.id.textViewReserve1_back);
             //itemcount_current_else= (TextView) view.findViewById(R.id.itemcount_current_else);
+            item_img_current.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShopsActivity.class);
+                    String  item_name = itemid_current.getText().toString();
+                    intent.putExtra("martname_current",martname_current.getText().toString());
+                    intent.putExtra("martposition_current",martposition_current.getText().toString());
+                    intent.putExtra("shop_id",shop_id);
+                    context.startActivity(intent);
+                }
+            });
             martposition_current.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

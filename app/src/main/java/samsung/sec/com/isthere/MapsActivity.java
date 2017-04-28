@@ -53,7 +53,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ArrayList<MarkerOptions> markers;
 
     private RecyclerView mRecyclerViewListItem_current;
-    private DataCurrentItem_Adapter mAdapterList_current;
+    private DataCurrentItem_Adapter_back mAdapterList_current;
     private RecyclerView.LayoutManager layoutManager_list_current;
 
     @Override
@@ -116,11 +116,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     int stock_stock = oneObject.getInt("stock_stock");
                     Shop shop = new Shop(shop_id, shop_name, marker_lat, marker_lng, oneObject.getString("shop_type"), oneObject.getString("shop_info"), oneObject.getString("shop_vendor"),shop_distance,stock_stock);
                     shops.add(shop);
-
-                    mAdapterList_current = new DataCurrentItem_Adapter(shops,context);
+                    String shopid = shop_id;
+                    mAdapterList_current = new DataCurrentItem_Adapter_back(shops,context);
                     mAdapterList_current.setSearchItem(mapsearchtext);
                     mRecyclerViewListItem_current.setAdapter(mAdapterList_current);
-
                     MarkerOptions marker = new MarkerOptions();
                     marker.position(new LatLng(marker_lat, marker_lng)).title(shop_info).snippet(shop_name);
                     int height = 150;

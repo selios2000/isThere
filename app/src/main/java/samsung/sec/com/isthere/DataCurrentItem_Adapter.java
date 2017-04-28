@@ -136,6 +136,7 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
         private TextView martposition_current;
         private TextView martdistance_current;
         private TextView textViewReserve1;
+        private LinearLayout item_layout_current;
         private FrameLayout frameLayoutUp;
         public String shop_id;
 
@@ -148,7 +149,19 @@ public class DataCurrentItem_Adapter extends RecyclerView.Adapter<DataCurrentIte
             martdistance_current = (TextView) view.findViewById(R.id.martdistance_current);
             textViewReserve1 = (TextView) view.findViewById(R.id.textViewReserve1);
             frameLayoutUp = (FrameLayout) view.findViewById(R.id.framelayout_up);
+            item_layout_current= (LinearLayout)view.findViewById(R.id.item_layout_current);
             item_img_current.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShopsActivity.class);
+                    String item_name = itemid_current.getText().toString();
+                    intent.putExtra("martname_current",martname_current.getText().toString());
+                    intent.putExtra("martposition_current",martposition_current.getText().toString());
+                    intent.putExtra("shop_id",shop_id);
+                    context.startActivity(intent);
+                }
+            });
+            item_layout_current.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShopsActivity.class);
