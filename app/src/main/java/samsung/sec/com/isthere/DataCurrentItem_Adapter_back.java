@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import VO.Shop;
+
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurrentItem_Adapter_back.ViewHolder> implements Filterable {
     private ArrayList<Shop> mArrayList;
@@ -71,12 +74,6 @@ public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurre
         viewHolder.martposition_current.setText(mFilteredList.get(i).getShop_info());
         viewHolder.martdistance_current.setText(String.valueOf(mFilteredList.get(i).getDistance())+ "M");
     }
-    public void setFocus(DataCurrentItem_Adapter_back.ViewHolder viewHolder,String findText){
-        int size= getItemCount();
-        for(int i= 0 ; i<size;i++){
-           // if(viewHolder.get)
-        }
-    }
     @Override
     public int getItemCount() {
         return mFilteredList.size();
@@ -122,7 +119,7 @@ public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurre
         private TextView martposition_current;
         private TextView itemcount_current_else;
         private TextView martdistance_current;
-        private LinearLayout itemidlayoutlist;
+        private LinearLayout itemListlayoutcurrentid;
         private TextView textViewReserve1;
         public String shop_id;
 
@@ -135,7 +132,7 @@ public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurre
             martposition_current = (TextView) view.findViewById(R.id.martposition_current_back);
             martdistance_current = (TextView) view.findViewById(R.id.martdistance_current_back);
             textViewReserve1 = (TextView) view.findViewById(R.id.textViewReserve1_back);
-            //itemcount_current_else= (TextView) view.findViewById(R.id.itemcount_current_else);
+            itemListlayoutcurrentid= (LinearLayout) view.findViewById(R.id.itemListlayoutcurrentid);
             item_img_current.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
