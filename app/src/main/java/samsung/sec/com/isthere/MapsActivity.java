@@ -215,7 +215,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("martposition_current", marker.getSnippet());
                 intent.putExtra("shop_id",selShopID);
                 context.startActivity(intent);
-                Toast.makeText(context, "'"+marker.getTitle()+"' 전체 상품 list "+ marker.getSnippet(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "'"+marker.getTitle()+"' 전체 상품 list "+ marker.getSnippet(), Toast.LENGTH_LONG).show();
             }
         });
     }

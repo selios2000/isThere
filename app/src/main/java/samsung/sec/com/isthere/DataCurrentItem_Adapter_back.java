@@ -98,9 +98,6 @@ public class DataCurrentItem_Adapter_back extends RecyclerView.Adapter<DataCurre
                 filterResults.values = mFilteredList;
                 return filterResults;
 
-
-
-
             }
 
             @Override

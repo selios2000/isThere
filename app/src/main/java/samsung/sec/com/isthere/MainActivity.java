@@ -1,9 +1,11 @@
 package samsung.sec.com.isthere;
 
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -19,10 +21,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<String> mArrayList;
     private DataAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private FrameLayout rlayout;
+    private FrameLayout rlayout,placeLayout;
 
     private RecyclerView mRecyclerViewListItem_current;
     private DataCurrentItem_Adapter mAdapterList_current;
@@ -71,37 +75,22 @@ public class MainActivity extends AppCompatActivity
 
     private ImageView img_product;
     private ImageView img_place;
+    private SearchView sr;
     private ArrayList<Shop> shops;
     private boolean productFlag=true;
-
+    private InputMethodManager controlManager;
+    private int originHeight=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_main_sliding);
+        controlManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         SlidingUpPanelLayout mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setCoveredFadeColor(Color.TRANSPARENT);
         shops = new ArrayList<Shop>();
-        /*TextView btn3= (TextView)findViewById(R.id.textViewReserve1);
-
-        btn3.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ReserveActivity.class);
-                startActivity(intent);
-            }
-        });*/
         rlayout = (FrameLayout) findViewById(R.id.contentLayout);
-       /* ImageView img1= (ImageView)findViewById(R.id.imgGs25);
-        img1.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MapsActivity.class);
-                //지도 액티비티로 이동
-                startActivity(intent);
-            }//C9FF24
-        });*/
-        // search view
+        placeLayout = (FrameLayout) findViewById(R.id.contentLayout_place);
         initViews();
         getListItem_frequent();
         getListitem_popular();
@@ -118,10 +107,6 @@ public class MainActivity extends AppCompatActivity
                 TextView product = (TextView) findViewById(R.id.textIstheretemplate);
                 //ImageView imageView2= (ImageView)findViewById(R.id.imageView2);
 
-             //   LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(imageView2.getLayoutParams().width, imageView2.getLayoutParams().height);
-              //  Log.d("donggeon",""+imageView2.getLayoutParams().width);
-              //  Log.d("donggeon",""+imageView2.getLayoutParams().height);
-              //  lp.setMargins(0, 250, 0, 0);
                 if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
                     if(productFlag==true)
                         product.setText("product");
@@ -129,15 +114,11 @@ public class MainActivity extends AppCompatActivity
                         product.setText("place");
                     LinearLayout mainLayout = (LinearLayout)findViewById(R.id.mainLayout);
                     product.setVisibility(View.VISIBLE);
-                 //   imageView2.setPadding(0,250,0,0);
-                   // imageView2.setLayoutParams(lp);
-                    // indicator #169EA4
                 } else
                     product.setVisibility(View.INVISIBLE);
-                 //   imageView2.setPadding(0,0,0,0);
             }
         });
-        SearchView sr = (SearchView) findViewById(R.id.searchview1);
+        sr = (SearchView) findViewById(R.id.searchview1);
         View searchplate = (View)sr.findViewById(android.support.v7.appcompat.R.id.search_plate);
         searchplate.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
         sr.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
@@ -146,10 +127,29 @@ public class MainActivity extends AppCompatActivity
                 if (hasFocus) {
                     sl.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     mRecyclerView.setVisibility(View.VISIBLE);
+
                     rlayout.setVisibility(View.INVISIBLE);
+                    Log.d("donggeon",""+mRecyclerView.getHeight());
+                    /*if(controlManager.isActive())
+                    {
+                        //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(mRecyclerView.getWidth(),mRecyclerView.getHeight()/2);
+                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(mRecyclerView.getWidth(),originHeight);
+                        mRecyclerView.setLayoutParams(layoutParams);
+                        Log.d("donggeon","sf active");
+                    }
+                    else{
+                        {
+                            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(mRecyclerView.getWidth(),originHeight);
+                            mRecyclerView.setLayoutParams(layoutParams);
+                            Log.d("donggeon","sf activeasd");
+                        }
+                    }*/
                 } else {
+                    Log.d("dongggeon","back focus else");
                     mRecyclerView.setVisibility(View.INVISIBLE);
                     rlayout.setVisibility(View.VISIBLE);
+                    //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(mRecyclerView.getWidth(),originHeight);
+                    //mRecyclerView.setLayoutParams(layoutParams);
                 }
             }
         });
@@ -194,6 +194,9 @@ public class MainActivity extends AppCompatActivity
 
                 img_product.setImageDrawable(drawable_pro);
                 img_place.setImageDrawable(drawable_pl);
+
+                placeLayout.setVisibility(View.GONE);
+                rlayout.setVisibility(View.VISIBLE);
                 productFlag=true;
             }
         });
@@ -205,15 +208,18 @@ public class MainActivity extends AppCompatActivity
 
                 img_product.setImageDrawable(drawable_pro);
                 img_place.setImageDrawable(drawable_pl);
+
+                placeLayout.setVisibility(View.VISIBLE);
+                rlayout.setVisibility(View.GONE);
                 productFlag=false;
             }
         });
+
     }
 
     private void initViews() {
         mRecyclerView = (RecyclerView) findViewById(R.id.notice_search_recycler);
-        mRecyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mArrayList = new ArrayList<>();
         mArrayList.add("너구리");
@@ -221,7 +227,7 @@ public class MainActivity extends AppCompatActivity
         mAdapter = new DataAdapter(mArrayList, context);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.INVISIBLE);
-
+        originHeight=mRecyclerView.getHeight();
     }
 
     private void getListItem_frequent() {
@@ -265,6 +271,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Log.d("donggeon","back"+controlManager.isActive());
     }
 
     @Override
@@ -308,6 +315,27 @@ public class MainActivity extends AppCompatActivity
         itemfilter.addAction(BR_ItemList);
         registerReceiver(mItemListBR, itemfilter);
         getSoldTopList();
+        Log.d("donggeon","resume"+controlManager.isActive());
+        /*if(controlManager.isActive())
+        {
+            controlManager.toggleSoftInput( 0, 0 );
+            Log.d("donggeon","onresume");
+            if(mRecyclerView.getHeight()==originHeight){}
+            else {
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(mRecyclerView.getWidth(), originHeight);
+              //  mRecyclerView.setLayoutParams(layoutParams);
+            }
+        }*/
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
+            Log.d("donggeon","onresume no");
+        } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+            Log.d("donggeon","onresume yes");
+        }
     }
 
     @Override
