@@ -117,7 +117,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for (int i = 0; i < jArray.length(); i++) {
                     JSONObject oneObject = jArray.getJSONObject(i); // Pulling items from the array
                     String shop_id = oneObject.getString("shop_id");
-                    String shop_name = oneObject.getString("shoxp_name");
+                    String shop_name = oneObject.getString("shop_name");
                     Double marker_lat = oneObject.getDouble("shop_lat");
                     Double marker_lng = oneObject.getDouble("shop_lng");
                     String shop_info = oneObject.getString("shop_info");
